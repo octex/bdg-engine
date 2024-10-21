@@ -1,0 +1,1 @@
+g++ ./src/*.cpp -I ./src -I ./include -L ./lib/* -o ./build/tbox.exe
