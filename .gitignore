@@ -32,5 +32,5 @@
 *.app
 
 # Custom ignores
-./.vscode/*
-./build/*
+.vscode/*
+build/*
