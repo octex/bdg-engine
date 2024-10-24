@@ -8,7 +8,7 @@ void InitThing(Thing *thing)
             InitPlayer(thing);
             break;
         case STATIC:
-            //InitStaticObj(thing);
+            InitStaticObj(thing);
             break;
         default:
             break;
@@ -24,7 +24,7 @@ void UpdateThing(Thing *thing)
             UpdatePlayer(thing);
             break;
         case STATIC:
-            //UpdateStaticObj(thing);
+            UpdateStaticObj(thing);
             break;
         default:
             break;
@@ -39,7 +39,7 @@ void RenderThing(Thing *thing)
             RenderPlayer(thing);
             break;
         case STATIC:
-            //RenderStaticObj(thing);
+            RenderStaticObj(thing);
             break;
         default:
             break;

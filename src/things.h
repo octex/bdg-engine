@@ -66,9 +66,9 @@ typedef struct StaticObj
     Rectangle collider;
 } StaticObj;
 
-// void InitStaticObj(Thing *thing);
-// void UpdatStaticObj(Thing *thing);
-// void RenderStaticObj(Thing *thing);
+void InitStaticObj(Thing *thing);
+void UpdatStaticObj(Thing *thing);
+void RenderStaticObj(Thing *thing);
 
 
 #endif
