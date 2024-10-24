@@ -12,14 +12,13 @@ typedef enum ThingType {
     ENTITY,
     STATIC,
     ITEM,
-    BATTERY_PACK,
-    BILLBOARD
+    INTERACTABLE,
+    PROP
 } ThingType;
 
 typedef struct Thing
 {
     unsigned int thingId;
-    Transform transform;
     Vector2 position;
     ThingType thingType;
     void *thing;
@@ -36,6 +35,7 @@ void RenderThing(Thing *thing);
 
 typedef struct Item {
     Texture texture;
+    Rectangle collider;
 } Item;
 
 void InitItem(Thing *thing);

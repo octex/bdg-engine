@@ -1,6 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <raylib.h>
 #include <fstream>
 #include <string>
 #include <string.h>

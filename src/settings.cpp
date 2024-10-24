@@ -6,8 +6,8 @@ std::map<std::string, int> settings;
 
 void LoadSettings()
 {
-    FILE *settingsFile = fopen(SETTINGS_FILENAME, "rb");
-    if (settingsFile == NULL)
+    bool settingsFileExists = FileExists(SETTINGS_FILENAME);
+    if (!settingsFileExists)
     {
         FILE *newSettingsFile = fopen(SETTINGS_FILENAME, "wb");
         int amount = 2;
@@ -25,6 +25,7 @@ void LoadSettings()
     }
     else
     {
+        FILE *settingsFile = fopen(SETTINGS_FILENAME, "rb");
         SettingsData settingsDataR = {};
         fread(&settingsDataR, sizeof(SettingsData), 1, settingsFile);
         settings.insert({settingsDataR.key, settingsDataR.data});
