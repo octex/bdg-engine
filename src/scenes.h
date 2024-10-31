@@ -4,45 +4,41 @@
 #include <raylib.h>
 #include <vector>
 #include "things.h"
+#include "assets.h"
+
+// #define SCENE_FILE_FORMAT ".bdgscene"
 
 
 typedef struct Scene
 {
-    // std::vector <Asset*> assets; -> Missing files
-    std::vector<Thing*> things;
+    std::vector<Thing> things;
 } Scene;
 
-//   _______________________
+void InitScene(Scene *scene);
+void UpdateScene(Scene *scene);
+void RenderScene(Scene *scene);
+
+
+//   =======================
 //  |   SceneFile Header    |
 //  |   SceneFile Assets    |
 //  |   SceneFile Things    |
-//  |_______________________|
+//   =======================
+// typedef struct SceneFileHeader {
+//     int sceneId, amountAssets, amountThings;
+// } SceneFileHeader;
 
-struct SceneFileHeader {
-    int sceneId, amountAssets, amountThings;
-} SceneFileHeader;
+// typedef struct SceneFileAsset {
+//     int assetId;
+// } SceneFileAsset;
 
-struct SceneFileAsset {
-    // TODO: Migrate old files
-} SceneFileAsset;
-
-struct SceneFileThing {
-    unsigned int thingId;
-    ThingType thingType;
-    Vector2 position;
-} SceneFileAsset;
-
-struct SceneFile {
-   struct SceneFileHeader header;
-} SceneFile;
-
-
-void InitThings(Scene *scene);
-void UpdateThings(Scene *scene);
-void RenderThings(Scene *scene);
-
-Scene* LoadScene(const char *filename);
-void UnloadSceneToFile(Scene *scene);
+// typedef struct SceneFileThing {
+//     unsigned int thingId;
+//     ThingType thingType;
+//     Vector2 position;
+// } SceneFileThing;
+// Scene LoadScene(const char *filename);
+// void UnloadSceneToFile(Scene *scene);
 
 
 #endif

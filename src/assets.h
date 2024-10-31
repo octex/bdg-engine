@@ -1,36 +1,37 @@
 #ifndef TBOX_ASSETS
 #define TBOX_ASSETS
 
-#define BASE_ASSETS_SIZE_ARR 1
-
+#include <map>
 #include <stdlib.h>
 #include "raylib.h"
 
-typedef enum AssetType
-{
-    TEXTURE,
-    SOUND,
-    MODEL,
-    MUSIC,
-    SPRITE_SHEET,
-    SHADER,
-} AssetType;
+#define ASSETS_DIR "resources/"
+
+// typedef enum AssetType
+// {
+//     TEXTURE,
+//     SOUND,
+//     MODEL,
+//     MUSIC,
+//     SPRITE_SHEET,
+//     SHADER,
+// } AssetType;
 
 typedef struct Asset
 {
     int id;
-    void *asset;        // Use: *(Texture*)asset syntax
+    const char *dir;
+    // AssetType assetType;
 } Asset;
 
-extern Asset* assets[BASE_ASSETS_SIZE_ARR];
-extern int amountOfAssets;
+extern std::map<int, Asset> assets;
+extern FilePathList assetsDirs;
 
-Asset* LoadAsset(const char* filename, AssetType assetType);
-AssetType GetAssetTypeByFileExtension(const char* fileExtensionn);
+// AssetType GetAssetTypeByFileExtension(const char* fileExtension);
+// Asset* LoadAsset(const char* filename, AssetType assetType);
 // Asset* LoadAsset(int assetId);
-Asset GetAsset(int assetId);
 
-void LoadBaseAssets();
-void UnloadBaseAssets();
+void LoadAssetsDirs();
+void LoadAssets();
 
 #endif

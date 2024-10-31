@@ -1,7 +1,9 @@
 #ifndef THINGS_H
 #define THINGS_H
 
+#include <vector>
 #include "raylib.h"
+#include "assets.h"
 
 //  ---------------------------------
 //  General definitions for Thing
@@ -21,12 +23,13 @@ typedef struct Thing
     unsigned int thingId;
     Vector2 position;
     ThingType thingType;
+    std::vector<int> assets;
     void *thing;
 } Thing;
 
-void InitThing(Thing *thing);
-void UpdateThing(Thing *thing);
-void RenderThing(Thing *thing);
+void InitThing(Thing thing);
+void UpdateThing(Thing thing);
+void RenderThing(Thing thing);
 
 
 //  ---------------------------------
@@ -52,9 +55,9 @@ typedef struct Player {
     Texture2D sprite;
 } Player;
 
-void InitPlayer(Thing *thing);
-void UpdatePlayer(Thing *thing);
-void RenderPlayer(Thing *thing);
+void InitPlayer(Thing thing);
+void UpdatePlayer(Thing thing);
+void RenderPlayer(Thing thing);
 
 //  ---------------------------------
 //  Static obj definition
@@ -66,9 +69,9 @@ typedef struct StaticObj
     Rectangle collider;
 } StaticObj;
 
-void InitStaticObj(Thing *thing);
-void UpdatStaticObj(Thing *thing);
-void RenderStaticObj(Thing *thing);
+void InitStaticObj(Thing thing);
+void UpdateStaticObj(Thing thing);
+void RenderStaticObj(Thing thing);
 
 
 #endif

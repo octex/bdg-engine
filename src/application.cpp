@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+Scene *currentScene;
+
 void InitApplication()
 {
     LoadSettings();
@@ -9,20 +11,21 @@ void InitApplication()
     int screenHeight = settings[SCREEN_HEIGHT];
     InitWindow(screenWidth, screenHeight, APPLICATION_NAME);
     SetTargetFPS(TARGET_FPS);
-    InitThings(currentScene);
+    LoadAssets();
+    InitScene(currentScene);
 }
 
 void Update()
 {
     // Update cycle here
-    UpdateThings(currentScene);
+    UpdateScene(currentScene);
 }
 
 void Render()
 {
     BeginDrawing();
-        RenderThings(currentScene);
         ClearBackground(BLACK);
+        RenderScene(currentScene);
     EndDrawing();
 }
 

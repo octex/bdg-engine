@@ -8,7 +8,11 @@
 #define APPLICATION_NAME "BDG"
 #define TARGET_FPS 60
 
-Scene *currentScene;
+#ifndef START_SCENE_ID
+    #define START_SCENE_ID 0
+#endif
+
+extern Scene *currentScene;
 
 void InitApplication();
 void Update();
