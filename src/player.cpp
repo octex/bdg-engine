@@ -16,3 +16,8 @@ void RenderPlayer(Thing thing)
     Player *player = (Player*)thing.thing;
     DrawTexture(player->sprite, thing.position.x, thing.position.y, WHITE);
 }
+
+void UnloadPlayer(Thing thing)
+{
+    
+}

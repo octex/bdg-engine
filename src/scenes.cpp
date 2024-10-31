@@ -24,6 +24,14 @@ void RenderScene(Scene *scene)
     }
 }
 
+void UnloadScene(Scene *scene)
+{
+    for (Thing thing : scene->things)
+    {
+        UnloadThing(thing);
+    }
+}
+
 // Scene LoadScene(const char *filename)
 // {
 //     Scene scene = {};

@@ -43,5 +43,20 @@ void RenderThing(Thing thing)
             break;
         default:
             break;
-    }   
+    }
+}
+
+void UnloadThing(Thing thing)
+{
+    switch (thing.thingType)
+    {
+        case PLAYER:
+            UnloadPlayer(thing);
+            break;
+        case STATIC:
+            UnloadStaticObj(thing);
+            break;
+        default:
+            break;
+    }
 }

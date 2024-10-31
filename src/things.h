@@ -30,6 +30,7 @@ typedef struct Thing
 void InitThing(Thing thing);
 void UpdateThing(Thing thing);
 void RenderThing(Thing thing);
+void UnloadThing(Thing thing);
 
 
 //  ---------------------------------
@@ -58,6 +59,7 @@ typedef struct Player {
 void InitPlayer(Thing thing);
 void UpdatePlayer(Thing thing);
 void RenderPlayer(Thing thing);
+void UnloadPlayer(Thing thing);
 
 //  ---------------------------------
 //  Static obj definition
@@ -72,6 +74,7 @@ typedef struct StaticObj
 void InitStaticObj(Thing thing);
 void UpdateStaticObj(Thing thing);
 void RenderStaticObj(Thing thing);
+void UnloadStaticObj(Thing thing);
 
 
 #endif

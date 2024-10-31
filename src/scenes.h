@@ -17,7 +17,7 @@ typedef struct Scene
 void InitScene(Scene *scene);
 void UpdateScene(Scene *scene);
 void RenderScene(Scene *scene);
-
+void UnloadScene(Scene *scene);
 
 //   =======================
 //  |   SceneFile Header    |

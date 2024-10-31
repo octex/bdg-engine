@@ -15,3 +15,10 @@ void RenderStaticObj(Thing thing)
     StaticObj *staticObj = (StaticObj*)thing.thing;
     DrawTexture(staticObj->sprite, thing.position.x, thing.position.y, WHITE);
 }
+
+void UnloadStaticObj(Thing thing)
+{
+    StaticObj *staticObj = (StaticObj*)thing.thing;
+    UnloadTexture(staticObj->sprite);
+    MemFree(staticObj);
+}

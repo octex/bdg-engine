@@ -32,5 +32,6 @@ void Render()
 void CloseApplication()
 {
     // Application closing routine
+    MemFree(currentScene);
     CloseWindow();
 }
