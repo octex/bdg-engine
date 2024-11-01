@@ -18,7 +18,6 @@ void LoadAssets()
         newAsset.id = assetId;
         newAsset.dir = path;
         assets.insert(std::pair<int, Asset>(assetId, newAsset));
-        // newAsset.assetType = GetAssetTypeByFileExtension(fileExtension);
     }
 }
 
@@ -31,25 +30,3 @@ void LoadAssetsDirs()
     }
     assetsDirs = LoadDirectoryFiles(ASSETS_DIR);
 }
-
-// AssetType GetAssetTypeByFileExtension(const char* fileExtension)
-// {
-//     if (fileExtension == ".png") {
-//         return TEXTURE;
-//     }
-// }
-
-// Asset* LoadAsset(const char* filename, AssetType assetType)
-// {
-//     Asset *asset = (Asset*) malloc(sizeof(Asset));
-//     switch (assetType)
-//     {
-//     case TEXTURE:
-//         Texture texture = LoadTexture(filename);
-//         asset->asset = (Texture*)asset->asset;
-//         asset->asset = &texture;
-//         break;
-//     default:
-//         break;
-//     }
-// }

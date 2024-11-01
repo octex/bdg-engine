@@ -10,6 +10,9 @@ void InitThing(Thing thing)
         case STATIC:
             InitStaticObj(thing);
             break;
+        case TILESET:
+            InitTileSet(thing);
+            break;
         default:
             break;
     }
@@ -41,6 +44,9 @@ void RenderThing(Thing thing)
         case STATIC:
             RenderStaticObj(thing);
             break;
+        case TILEMAP:
+            RenderTileMap(thing);
+            break;
         default:
             break;
     }
@@ -55,6 +61,12 @@ void UnloadThing(Thing thing)
             break;
         case STATIC:
             UnloadStaticObj(thing);
+            break;
+        case TILEMAP:
+            UnloadTileMap(thing);
+            break;
+        case TILESET:
+            UnloadTileSet(thing);
             break;
         default:
             break;

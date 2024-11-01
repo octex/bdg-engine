@@ -1,0 +1,24 @@
+// ------------------------------- STATIC OBJECTS
+
+scene->things.push_back(Thing{0, {0, 0}, STATIC, {10}, MemAlloc(sizeof(StaticObj))});
+
+// ------------------------------- TILEMAPS
+
+TileSet *tileSet = (TileSet*)MemAlloc(sizeof(TileSet));
+tileSet->tileHeight = 32;
+tileSet->tileWidth = 32;
+scene->things.push_back(Thing{0, {0, 0}, TILESET, {2}, tileSet});
+
+TileMap *tileMap = (TileMap*)MemAlloc(sizeof(TileMap));
+tileMap->xCell = 32;
+tileMap->yCell = 32;
+
+tileMap->tiles.push_back(Tile{{0, 0}, 1, tileSet});
+
+for (int i = 1; i < 10; i++)
+{
+    tileMap->tiles.push_back(Tile{{(float)i, 0}, i + 1, tileSet});
+    tileMap->tiles.push_back(Tile{{0, (float)i}, i + 1, tileSet});
+}
+
+scene->things.push_back(Thing{1, {250, 250}, TILEMAP, {}, tileMap});

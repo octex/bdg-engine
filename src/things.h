@@ -17,6 +17,7 @@ typedef enum ThingType {
     INTERACTABLE,
     PROP,
     TILEMAP,
+    TILESET,
 } ThingType;
 
 typedef struct Thing
@@ -87,12 +88,12 @@ typedef struct TileSet {
 } TileSet;
 
 typedef struct Tile {
-    struct TileSet;
+    Vector2 tilePosition;   // Relative to screen position
+    int index;              // Starts at 1
+    TileSet *tileSet;
 } Tile;
 
 void InitTileSet(Thing thing);
-void UpdateTileSet(Thing thing);
-void RenderTileSet(Thing thing);
 void UnloadTileSet(Thing thing);
 
 //  ---------------------------------
@@ -100,7 +101,8 @@ void UnloadTileSet(Thing thing);
 //  ---------------------------------
 
 typedef struct TileMap {
-    int mapWidth, mapHeight;
+    std::vector<Tile> tiles;
+    int xCell, yCell;
 } TileMap;
 
 void InitTileMap(Thing thing);
