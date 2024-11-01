@@ -2,7 +2,7 @@
 
 void InitPlayer(Thing thing)
 {
-    thing.position = (Vector2) { 0.0f, 0.0f };
+    // thing.position = (Vector2) { 0.0f, 0.0f };
     Player *player = (Player*)thing.thing;
     player->camera = (Camera2D){ 0 };
     player->camera.target = thing.position;

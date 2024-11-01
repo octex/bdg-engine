@@ -15,7 +15,8 @@ typedef enum ThingType {
     STATIC,
     ITEM,
     INTERACTABLE,
-    PROP
+    PROP,
+    TILEMAP,
 } ThingType;
 
 typedef struct Thing
@@ -76,5 +77,35 @@ void UpdateStaticObj(Thing thing);
 void RenderStaticObj(Thing thing);
 void UnloadStaticObj(Thing thing);
 
+//  ---------------------------------
+//  TileSet definition
+//  ---------------------------------
+
+typedef struct TileSet {
+    Texture2D sprite;
+    int tileWidth, tileHeight;
+} TileSet;
+
+typedef struct Tile {
+    struct TileSet;
+} Tile;
+
+void InitTileSet(Thing thing);
+void UpdateTileSet(Thing thing);
+void RenderTileSet(Thing thing);
+void UnloadTileSet(Thing thing);
+
+//  ---------------------------------
+//  TileMap definition
+//  ---------------------------------
+
+typedef struct TileMap {
+    int mapWidth, mapHeight;
+} TileMap;
+
+void InitTileMap(Thing thing);
+void UpdateTileMap(Thing thing);
+void RenderTileMap(Thing thing);
+void UnloadTileMap(Thing thing);
 
 #endif

@@ -19,6 +19,7 @@ extern std::map<std::string, int> settings;
 // ***  List of common keywords for settings ***
 // screen_width:    scrw
 // screen_height:   scrh
+// fullscreen:      scrf
 // music_volume:    mvol
 // sfx_volume:      svol
 

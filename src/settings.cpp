@@ -12,7 +12,7 @@ void LoadSettings()
         FILE *newSettingsFile = fopen(SETTINGS_FILENAME, "wb");
         int amount = 2;
         char keys[2][5] = {SCREEN_WIDTH, SCREEN_HEIGHT};
-        int values[] = {1024, 728};
+        int values[] = {1280, 1024};
         for (int i = 0; i < amount; i++)
         {
             SettingsData settingsData = {};
