@@ -14,6 +14,9 @@ void InitApplication()
     SetTargetFPS(TARGET_FPS);
     LoadAssets();
     appCamera = {0};
+    appCamera.offset = Vector2{screenWidth/2.0f, screenHeight/2.0f };
+    appCamera.zoom = 1;
+    appCamera.rotation = 0;
     InitScene(currentScene);
 }
 
@@ -27,7 +30,9 @@ void Render()
 {
     BeginDrawing();
         ClearBackground(BLACK);
-        RenderScene(currentScene);
+        BeginMode2D(appCamera);
+            RenderScene(currentScene);
+        EndMode2D();
     EndDrawing();
 }
 

@@ -2,6 +2,7 @@
 #define BDG_APPLICATION_H
 
 #include <raylib.h>
+#include <raymath.h>
 #include "settings.h"
 #include "scenes.h"
 

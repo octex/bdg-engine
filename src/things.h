@@ -24,7 +24,6 @@ typedef struct Thing
 {
     unsigned int thingId;
     Vector2 position;
-    float x, y;
     ThingType thingType;
     std::vector<int> assets;
     void *thing;
@@ -57,7 +56,7 @@ void RenderItem(Thing *thing);
 typedef struct Player {
     Camera2D camera;
     Texture2D sprite;
-    float rotation;
+    float rotation, movementSpeed;
 } Player;
 
 void InitPlayer(Thing *thing);
