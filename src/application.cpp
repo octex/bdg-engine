@@ -3,6 +3,7 @@
 #include <iostream>
 
 Scene *currentScene;
+Camera2D appCamera;
 
 void InitApplication()
 {
@@ -12,6 +13,7 @@ void InitApplication()
     InitWindow(screenWidth, screenHeight, APPLICATION_NAME);
     SetTargetFPS(TARGET_FPS);
     LoadAssets();
+    appCamera = {0};
     InitScene(currentScene);
 }
 

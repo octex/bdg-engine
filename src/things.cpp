@@ -1,8 +1,8 @@
 #include "things.h"
 
-void InitThing(Thing thing)
+void InitThing(Thing *thing)
 {
-    switch (thing.thingType)
+    switch (thing->thingType)
     {
         case PLAYER:
             InitPlayer(thing);
@@ -19,9 +19,9 @@ void InitThing(Thing thing)
 }
 
 
-void UpdateThing(Thing thing)
+void UpdateThing(Thing *thing)
 {
-    switch (thing.thingType)
+    switch (thing->thingType)
     {
         case PLAYER:
             UpdatePlayer(thing);
@@ -34,9 +34,9 @@ void UpdateThing(Thing thing)
     }
 }
 
-void RenderThing(Thing thing)
+void RenderThing(Thing *thing)
 {
-    switch (thing.thingType)
+    switch (thing->thingType)
     {
         case PLAYER:
             RenderPlayer(thing);
@@ -52,9 +52,9 @@ void RenderThing(Thing thing)
     }
 }
 
-void UnloadThing(Thing thing)
+void UnloadThing(Thing *thing)
 {
-    switch (thing.thingType)
+    switch (thing->thingType)
     {
         case PLAYER:
             UnloadPlayer(thing);

@@ -2,7 +2,7 @@
 
 void InitScene(Scene *scene)
 {
-    for (Thing thing : scene->things)
+    for (Thing *thing : scene->things)
     {
         InitThing(thing);
     }
@@ -10,7 +10,7 @@ void InitScene(Scene *scene)
 
 void UpdateScene(Scene *scene)
 {
-    for (Thing thing : scene->things)
+    for (Thing *thing : scene->things)
     {
         UpdateThing(thing);
     }
@@ -18,7 +18,7 @@ void UpdateScene(Scene *scene)
 
 void RenderScene(Scene *scene)
 {
-    for (Thing thing : scene->things)
+    for (Thing *thing : scene->things)
     {
         RenderThing(thing);
     }
@@ -26,7 +26,7 @@ void RenderScene(Scene *scene)
 
 void UnloadScene(Scene *scene)
 {
-    for (Thing thing : scene->things)
+    for (Thing *thing : scene->things)
     {
         UnloadThing(thing);
     }

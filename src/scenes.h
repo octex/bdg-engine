@@ -11,7 +11,7 @@
 
 typedef struct Scene
 {
-    std::vector<Thing> things;
+    std::vector<Thing*> things;
 } Scene;
 
 void InitScene(Scene *scene);

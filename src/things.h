@@ -24,15 +24,16 @@ typedef struct Thing
 {
     unsigned int thingId;
     Vector2 position;
+    float x, y;
     ThingType thingType;
     std::vector<int> assets;
     void *thing;
 } Thing;
 
-void InitThing(Thing thing);
-void UpdateThing(Thing thing);
-void RenderThing(Thing thing);
-void UnloadThing(Thing thing);
+void InitThing(Thing *thing);
+void UpdateThing(Thing *thing);
+void RenderThing(Thing *thing);
+void UnloadThing(Thing *thing);
 
 
 //  ---------------------------------
@@ -56,12 +57,13 @@ void RenderItem(Thing *thing);
 typedef struct Player {
     Camera2D camera;
     Texture2D sprite;
+    float rotation;
 } Player;
 
-void InitPlayer(Thing thing);
-void UpdatePlayer(Thing thing);
-void RenderPlayer(Thing thing);
-void UnloadPlayer(Thing thing);
+void InitPlayer(Thing *thing);
+void UpdatePlayer(Thing *thing);
+void RenderPlayer(Thing *thing);
+void UnloadPlayer(Thing *thing);
 
 //  ---------------------------------
 //  Static obj definition
@@ -73,10 +75,10 @@ typedef struct StaticObj
     Rectangle collider;
 } StaticObj;
 
-void InitStaticObj(Thing thing);
-void UpdateStaticObj(Thing thing);
-void RenderStaticObj(Thing thing);
-void UnloadStaticObj(Thing thing);
+void InitStaticObj(Thing *thing);
+void UpdateStaticObj(Thing *thing);
+void RenderStaticObj(Thing *thing);
+void UnloadStaticObj(Thing *thing);
 
 //  ---------------------------------
 //  TileSet definition
@@ -93,8 +95,8 @@ typedef struct Tile {
     TileSet *tileSet;
 } Tile;
 
-void InitTileSet(Thing thing);
-void UnloadTileSet(Thing thing);
+void InitTileSet(Thing *thing);
+void UnloadTileSet(Thing *thing);
 
 //  ---------------------------------
 //  TileMap definition
@@ -105,9 +107,9 @@ typedef struct TileMap {
     int xCell, yCell;
 } TileMap;
 
-void InitTileMap(Thing thing);
-void UpdateTileMap(Thing thing);
-void RenderTileMap(Thing thing);
-void UnloadTileMap(Thing thing);
+void InitTileMap(Thing *thing);
+void UpdateTileMap(Thing *thing);
+void RenderTileMap(Thing *thing);
+void UnloadTileMap(Thing *thing);
 
 #endif

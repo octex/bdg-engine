@@ -12,6 +12,7 @@
     #define START_SCENE_ID 0
 #endif
 
+extern Camera2D appCamera;
 extern Scene *currentScene;
 
 void InitApplication();

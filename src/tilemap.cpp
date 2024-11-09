@@ -1,23 +1,23 @@
 #include "things.h"
 
-void InitTileMap(Thing thing)
+void InitTileMap(Thing *thing)
 {
 
 }
 
-void UpdateTileMap(Thing thing)
+void UpdateTileMap(Thing *thing)
 {
 
 }
 
-void RenderTileMap(Thing thing)
+void RenderTileMap(Thing *thing)
 {
-    TileMap *tileMap = (TileMap*)thing.thing;
+    TileMap *tileMap = (TileMap*)thing->thing;
     for (Tile tile: tileMap->tiles)
     {
         Texture2D tileTexture = tile.tileSet->sprite;
         
-        Vector2 normalizedTilePosition = thing.position;
+        Vector2 normalizedTilePosition = thing->position;
         normalizedTilePosition.x += tileMap->xCell * tile.tilePosition.x;
         normalizedTilePosition.y += tileMap->yCell * tile.tilePosition.y;
         
@@ -29,7 +29,7 @@ void RenderTileMap(Thing thing)
     }
 }
 
-void UnloadTileMap(Thing thing)
+void UnloadTileMap(Thing *thing)
 {
-    MemFree(thing.thing);
+    MemFree(thing->thing);
 }
