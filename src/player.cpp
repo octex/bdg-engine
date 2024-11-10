@@ -10,6 +10,7 @@ void MovePlayer(Thing *thing, Player *player, Vector2 mousePosition, bool backwa
     vMovement = Vector2Scale(vMovement, player->movementSpeed);
     if (backwards)
         vMovement = Vector2Negate(vMovement);
+    player->movement = vMovement;
     thing->position = Vector2Add(thing->position, vMovement);
 }
 
@@ -22,6 +23,7 @@ void InitPlayer(Thing *thing)
 {
     Player *player = (Player*)thing->thing;
     player->sprite = LoadTexture(assets[thing->assets[0]].dir);
+    player->collider = {(float)player->sprite.width / 2, (float)player->sprite.height / 2, (float)player->sprite.width, (float)player->sprite.height};
     player->movementSpeed = 5;
 }
 
@@ -43,7 +45,8 @@ void UpdatePlayer(Thing *thing)
         MovePlayer(thing, player, mousePosition, true);
     }
     CameraFollow(thing->position, player->sprite);
-    // std::cout << normalizedMouse.x << " | " << normalizedMouse.y << std::endl;
+    player->collider.x = thing->position.x - player->sprite.width / 2;
+    player->collider.y = thing->position.y - player->sprite.height / 2;
 }
 
 void RenderPlayer(Thing *thing)
@@ -55,6 +58,7 @@ void RenderPlayer(Thing *thing)
     DrawTexturePro(player->sprite, Rectangle{0, 0, (float)player->sprite.width, (float)player->sprite.height},
                        Rectangle{ thing->position.x, thing->position.y, (float)player->sprite.width, (float)player->sprite.height },
                        Vector2{(float)player->sprite.height/2, (float)player->sprite.width/2 }, player->rotation - 90, WHITE);
+    DrawRectangleLines(player->collider.x, player->collider.y, player->collider.width, player->collider.height, RED);
 }
 
 void UnloadPlayer(Thing *thing)

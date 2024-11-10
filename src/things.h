@@ -56,6 +56,9 @@ void RenderItem(Thing *thing);
 typedef struct Player {
     Camera2D camera;
     Texture2D sprite;
+    Rectangle collider;
+    Vector2 movement;
+    bool isColliding;
     float rotation, movementSpeed;
 } Player;
 

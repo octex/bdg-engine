@@ -4,6 +4,7 @@
 
 Scene *currentScene;
 Camera2D appCamera;
+Thing *gamePlayer;
 
 void InitApplication()
 {

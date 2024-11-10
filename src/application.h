@@ -15,6 +15,7 @@
 
 extern Camera2D appCamera;
 extern Scene *currentScene;
+extern Thing *gamePlayer;
 
 void InitApplication();
 void Update();
