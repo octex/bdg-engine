@@ -14,6 +14,8 @@ void UpdateScene(Scene *scene)
     {
         UpdateThing(thing);
     }
+    UpdateXAxis(scene);
+    UpdateYAxis(scene);
 }
 
 void RenderScene(Scene *scene)
@@ -21,6 +23,17 @@ void RenderScene(Scene *scene)
     for (Thing *thing : scene->things)
     {
         RenderThing(thing);
+    }
+    if (RENDER_COLLIDERS)
+    {
+        for (PhysicThing *pThing : scene->physicalThings)
+        {
+            DrawRectangleLines(pThing->collider.x,
+                                pThing->collider.y,
+                                pThing->collider.width,
+                                pThing->collider.height,
+                                RED);
+        }
     }
 }
 
@@ -30,6 +43,43 @@ void UnloadScene(Scene *scene)
     {
         UnloadThing(thing);
     }
+}
+
+void UpdateXAxis(Scene *scene)
+{
+    for (PhysicThing *thing : scene->physicalThings)
+    {
+        thing->thing->position.x += thing->velocity.x;
+    }
+}
+
+void UpdateYAxis(Scene *scene)
+{
+    for (PhysicThing *thing : scene->physicalThings)
+    {
+        thing->thing->position.y += thing->velocity.y;
+    }
+}
+
+void AddThing(Scene *scene, Thing *thing)
+{
+    if (thing->hasPhysicalBody)
+    {
+        thing->physicalBody = (PhysicThing*)MemAlloc(sizeof(PhysicThing));
+        thing->physicalBody->thing = thing;
+        scene->physicalThings.push_back(thing->physicalBody);
+    }
+    scene->things.push_back(thing);
+}
+
+void DeleteThing(Scene *scene, int thingId)
+{
+
+}
+
+Thing* FindThing(Scene *scene, int thingId)
+{
+    return NULL;
 }
 
 // Scene LoadScene(const char *filename)

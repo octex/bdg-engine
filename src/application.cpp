@@ -5,6 +5,7 @@
 Scene *currentScene;
 Camera2D appCamera;
 Thing *gamePlayer;
+float deltaTime;
 
 void InitApplication()
 {
@@ -24,6 +25,7 @@ void InitApplication()
 void Update()
 {
     // Update cycle here
+    deltaTime = GetFrameTime();
     UpdateScene(currentScene);
 }
 

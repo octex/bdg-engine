@@ -26,7 +26,9 @@ typedef struct Thing
     Vector2 position;
     ThingType thingType;
     std::vector<int> assets;
+    bool hasPhysicalBody;
     void *thing;
+    struct PhysicThing *physicalBody;
 } Thing;
 
 void InitThing(Thing *thing);
@@ -34,6 +36,28 @@ void UpdateThing(Thing *thing);
 void RenderThing(Thing *thing);
 void UnloadThing(Thing *thing);
 
+//  ---------------------------------------------------
+//  Physical thing definition
+//  If is static, velocity will always be zero.
+//  If is trigger, collision handling will be ignored.
+//  ---------------------------------------------------
+
+typedef struct PhysicThing
+{
+    bool isStatic, isTrigger;
+    Thing *thing;
+    Rectangle collider;
+    Vector2 velocity;
+} PhysicThing;
+
+typedef struct CollisionPair
+{
+    bool xAxis, yAxis;
+    Thing *a, *b;
+} CollisionPair;
+
+bool CheckCollisionRecsX(Rectangle rec1, Rectangle rec2);
+bool CheckCollisionRecsY(Rectangle rec1, Rectangle rec2);
 
 //  ---------------------------------
 //  Item definition
@@ -41,7 +65,6 @@ void UnloadThing(Thing *thing);
 
 typedef struct Item {
     Texture texture;
-    Rectangle collider;
 } Item;
 
 void InitItem(Thing *thing);
@@ -55,9 +78,6 @@ void RenderItem(Thing *thing);
 
 typedef struct Player {
     Texture2D sprite;
-    Rectangle collider;
-    Vector2 movement;
-    bool isColliding;
     float rotation, movementSpeed;
 } Player;
 
@@ -73,7 +93,6 @@ void UnloadPlayer(Thing *thing);
 typedef struct StaticObj
 {
     Texture2D sprite;
-    Rectangle collider;
 } StaticObj;
 
 void InitStaticObj(Thing *thing);
