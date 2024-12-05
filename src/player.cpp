@@ -6,7 +6,7 @@
 
 void MovePlayer(Thing *thing, Player *player, Vector2 mousePosition)
 {
-    bool move = (IsKeyDown(KEY_S) || IsKeyDown(KEY_W));// && !player->isColliding ? true : false;
+    bool move = (IsKeyDown(KEY_S) || IsKeyDown(KEY_W));
     bool backwards = IsKeyDown(KEY_S);
     Vector2 normalizedMousePosition = Vector2Normalize(mousePosition);
     Vector2 newVelocity = move ? normalizedMousePosition : Vector2Zero();
@@ -14,19 +14,6 @@ void MovePlayer(Thing *thing, Player *player, Vector2 mousePosition)
     if (backwards)
         newVelocity = Vector2Negate(newVelocity);
     thing->physicalBody->velocity = newVelocity;
-    // if (player->isColliding)
-    // {
-    //     if (newVelocity.x == 0 && newVelocity.y == 0)
-    //     {
-    //         player->velocity = Vector2Scale(normalizedMousePosition, player->movementSpeed);
-    //     }
-    //     // else
-    //     // {
-    //     //     player->velocity = player->velocity;
-    //     // }
-    //     player->velocity = Vector2Negate(player->velocity);
-    // }
-    // thing->position = Vector2Add(thing->position, player->velocity);
 }
 
 void CameraFollow(Vector2 position, Texture2D sprite)
