@@ -72,6 +72,15 @@ void UpdateXAxis(Scene *scene)
             bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
             if (collides)
             {
+                /*
+                    08/01/2025 - 00:45
+                    Dejo estas notas porque no me da la cabeza ya (en realidad me levanto temprano el cerebro me sobra la verdad en este momento)
+                        - No funciona con colisiones superpuestas
+                        - La misma logica aplicada en el eje Y rompe todo
+                        - No esta separando los objetos, solo lo "frena"
+                    Hay que hacer uso de los pares de colision y ver si realmente aplica
+                    en base a cada eje
+                */
                 float distance = 0;
                 if (dThing->collider.x < sThing->collider.x)
                 {
