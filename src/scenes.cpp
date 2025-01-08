@@ -64,6 +64,28 @@ void UpdateXAxis(Scene *scene)
         thing->collider.x = thing->thing->position.x - thing->collider.width / 2;
         thing->thing->position.x += thing->velocity.x;
     }
+
+    for (PhysicThing *dThing : scene->dynamicThings)
+    {
+        for (PhysicThing *sThing : scene->staticThings)
+        {
+            bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
+            if (collides)
+            {
+                float distance = 0;
+                if (dThing->collider.x < sThing->collider.x)
+                {
+                    distance = (dThing->collider.x + (dThing->collider.width)) - sThing->collider.x;
+                }
+                else if (dThing->collider.x > sThing->collider.x)
+                {
+                    distance = dThing->collider.x - (sThing->collider.x + (sThing->collider.width));
+                }
+                distance = -distance;                   // Todavia no se por que, pero es necesario.
+                dThing->thing->position.x += distance;
+            }
+        }
+    }
 }
 
 void UpdateYAxis(Scene *scene)
@@ -74,27 +96,27 @@ void UpdateYAxis(Scene *scene)
         thing->thing->position.y += thing->velocity.y;
     }
 
-    for (PhysicThing *dThing : scene->dynamicThings)
-    {
-        for (PhysicThing *sThing : scene->staticThings)
-        {
-            bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
-            if (collides)
-            {
-                float distance = 0;
-                if (dThing->collider.y < sThing->collider.y)
-                {
-                    distance = (dThing->collider.y + (dThing->collider.height)) - sThing->collider.y;
-                }
-                else if (dThing->collider.y > sThing->collider.y)
-                {
-                    distance = dThing->collider.y - (sThing->collider.y + (sThing->collider.height));
-                }
-                distance = -distance;                   // Todavia no se por que, pero es necesario.
-                dThing->thing->position.y += distance;
-            }
-        }
-    }
+    // for (PhysicThing *dThing : scene->dynamicThings)
+    // {
+    //     for (PhysicThing *sThing : scene->staticThings)
+    //     {
+    //         bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
+    //         if (collides)
+    //         {
+    //             float distance = 0;
+    //             if (dThing->collider.y < sThing->collider.y)
+    //             {
+    //                 distance = (dThing->collider.y + (dThing->collider.height)) - sThing->collider.y;
+    //             }
+    //             else if (dThing->collider.y > sThing->collider.y)
+    //             {
+    //                 distance = dThing->collider.y - (sThing->collider.y + (sThing->collider.height));
+    //             }
+    //             distance = -distance;                   // Todavia no se por que, pero es necesario.
+    //             dThing->thing->position.y += distance;
+    //         }
+    //     }
+    // }
 }
 
 void AddThing(Scene *scene, Thing *thing)
