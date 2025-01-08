@@ -1,10 +1,22 @@
 #include "scenes.h"
 
+#include <iostream>
+
 void InitScene(Scene *scene)
 {
     for (Thing *thing : scene->things)
     {
         InitThing(thing);
+    }
+
+    for (PhysicThing *pThing : scene->physicalThings)
+    {
+        if (!pThing->isStatic)
+        {
+            scene->dynamicThings.push_back(pThing);
+        } else {
+            scene->staticThings.push_back(pThing);
+        }
     }
 }
 
@@ -47,22 +59,48 @@ void UnloadScene(Scene *scene)
 
 void UpdateXAxis(Scene *scene)
 {
-    for (PhysicThing *thing : scene->physicalThings)
+    for (PhysicThing *thing : scene->dynamicThings)
     {
+        thing->collider.x = thing->thing->position.x - thing->collider.width / 2;
         thing->thing->position.x += thing->velocity.x;
     }
 }
 
 void UpdateYAxis(Scene *scene)
 {
-    for (PhysicThing *thing : scene->physicalThings)
+    for (PhysicThing *thing : scene->dynamicThings)
     {
+        thing->collider.y = thing->thing->position.y - thing->collider.height / 2;
         thing->thing->position.y += thing->velocity.y;
+    }
+
+    for (PhysicThing *dThing : scene->dynamicThings)
+    {
+        for (PhysicThing *sThing : scene->staticThings)
+        {
+            bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
+            if (collides)
+            {
+                float distance = 0;
+                if (dThing->collider.y < sThing->collider.y)
+                {
+                    distance = (dThing->collider.y + (dThing->collider.height)) - sThing->collider.y;
+                }
+                else if (dThing->collider.y > sThing->collider.y)
+                {
+                    distance = dThing->collider.y - (sThing->collider.y + (sThing->collider.height));
+                }
+                distance = -distance;                   // Todavia no se por que, pero es necesario.
+                dThing->thing->position.y += distance;
+            }
+        }
     }
 }
 
 void AddThing(Scene *scene, Thing *thing)
 {
+    scene->thingsCounter++;
+    thing->thingId = scene->thingsCounter;
     if (thing->hasPhysicalBody)
     {
         thing->physicalBody = (PhysicThing*)MemAlloc(sizeof(PhysicThing));
@@ -79,7 +117,7 @@ void DeleteThing(Scene *scene, int thingId)
 
 Thing* FindThing(Scene *scene, int thingId)
 {
-    return NULL;
+    return scene->things[thingId];
 }
 
 // Scene LoadScene(const char *filename)

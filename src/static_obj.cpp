@@ -7,6 +7,8 @@ void InitStaticObj(Thing *thing)
     thing->thing = MemAlloc(sizeof(StaticObj));
     StaticObj *staticObj = (StaticObj*)thing->thing;
     staticObj->sprite = LoadTexture(assets[thing->assets[0]].dir);
+    thing->physicalBody->isStatic = true;
+    thing->physicalBody->isTrigger = false;
     thing->physicalBody->collider = {thing->position.x, thing->position.y, (float)staticObj->sprite.width, (float)staticObj->sprite.height};
 }
 

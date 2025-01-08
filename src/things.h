@@ -52,12 +52,8 @@ typedef struct PhysicThing
 
 typedef struct CollisionPair
 {
-    bool xAxis, yAxis;
     Thing *a, *b;
 } CollisionPair;
-
-bool CheckCollisionRecsX(Rectangle rec1, Rectangle rec2);
-bool CheckCollisionRecsY(Rectangle rec1, Rectangle rec2);
 
 //  ---------------------------------
 //  Item definition

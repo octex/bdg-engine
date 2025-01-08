@@ -15,8 +15,13 @@
 
 typedef struct Scene
 {
+    int thingsCounter;
     std::vector<Thing*> things;
     std::vector<PhysicThing*> physicalThings;
+    std::vector<PhysicThing*> staticThings;
+    std::vector<PhysicThing*> dynamicThings;
+    std::vector<CollisionPair> collisionsToHandleX;
+    std::vector<CollisionPair> collisionsToHandleY;
 } Scene;
 
 void InitScene(Scene *scene);
