@@ -11,8 +11,7 @@ void MovePlayer(Thing *thing, Player *player, Vector2 mousePosition)
     Vector2 normalizedMousePosition = Vector2Normalize(mousePosition);
     Vector2 newVelocity = move ? normalizedMousePosition : Vector2Zero();
     newVelocity = Vector2Scale(newVelocity, player->movementSpeed);
-    if (backwards)
-        newVelocity = Vector2Negate(newVelocity);
+    newVelocity = backwards ? Vector2Negate(newVelocity) : newVelocity;
     thing->physicalBody->velocity = newVelocity;
 }
 
