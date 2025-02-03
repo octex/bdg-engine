@@ -25,9 +25,13 @@ void InitPlayer(Thing *thing)
     thing->thing = MemAlloc(sizeof(Player));
     Player *player = (Player*)thing->thing;
     player->sprite = LoadTexture(assets[thing->assets[0]].dir);
+
+    thing->position.x = (thing->position.x - player->sprite.width) / 2;
+    thing->position.y = (thing->position.y - player->sprite.height) / 2;
+
     thing->physicalBody->isStatic = false;
     thing->physicalBody->isTrigger = false;
-    thing->physicalBody->collider = {(float)player->sprite.width / 2, (float)player->sprite.height / 2, (float)player->sprite.width, (float)player->sprite.height};
+    thing->physicalBody->collider = {thing->position.x, thing->position.y, (float)player->sprite.width, (float)player->sprite.height};
     player->movementSpeed = 5;
 }
 
@@ -52,7 +56,7 @@ void RenderPlayer(Thing *thing)
 
     DrawTexturePro(player->sprite, Rectangle{0, 0, (float)player->sprite.width, (float)player->sprite.height},
                        Rectangle{ thing->position.x, thing->position.y, (float)player->sprite.width, (float)player->sprite.height },
-                       Vector2{(float)player->sprite.height/2, (float)player->sprite.width/2 }, player->rotation - 90, WHITE);
+                       Vector2{(float)player->sprite.width / 2, (float)player->sprite.height / 2 }, player->rotation, WHITE);
 }
 
 void UnloadPlayer(Thing *thing)

@@ -61,8 +61,9 @@ void UpdateXAxis(Scene *scene)
 {
     for (PhysicThing *thing : scene->dynamicThings)
     {
-        thing->collider.x = thing->thing->position.x - thing->collider.width / 2;
+        // thing->collider.x = thing->thing->position.x - thing->collider.width / 2;
         thing->thing->position.x += thing->velocity.x;
+        thing->collider.x = thing->thing->position.x;
     }
 
     for (PhysicThing *dThing : scene->dynamicThings)
@@ -101,8 +102,10 @@ void UpdateYAxis(Scene *scene)
 {
     for (PhysicThing *thing : scene->dynamicThings)
     {
-        thing->collider.y = thing->thing->position.y - thing->collider.height / 2;
+        // thing->collider.y = thing->thing->position.y - thing->collider.height / 2;
+        // thing->thing->position.y += thing->velocity.y;
         thing->thing->position.y += thing->velocity.y;
+        thing->collider.y = thing->thing->position.y;
     }
 
     // for (PhysicThing *dThing : scene->dynamicThings)
