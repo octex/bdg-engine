@@ -6,8 +6,7 @@
 #include <vector>
 #include "things.h"
 #include "assets.h"
-
-#define RENDER_COLLIDERS true
+#include "settings.h"
 
 // ----------------------------------------
 //      Scene struct and main functions

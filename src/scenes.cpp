@@ -36,7 +36,7 @@ void RenderScene(Scene *scene)
     {
         RenderThing(thing);
     }
-    if (RENDER_COLLIDERS)
+    if (DEVELOPER_MODE)
     {
         for (PhysicThing *pThing : scene->physicalThings)
         {

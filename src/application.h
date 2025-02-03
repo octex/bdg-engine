@@ -23,4 +23,7 @@ void Update();
 void Render();
 void CloseApplication();
 
+/*  DEV TOOLS   */
+void DrawAxis();
+
 #endif

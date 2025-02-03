@@ -14,6 +14,9 @@
 #define MUSIC_VOLUME "mvol"
 #define SFX_VOLUME "svol"
 
+/*  FLAGS   */
+#define DEVELOPER_MODE true
+
 extern std::map<std::string, int> settings;
 
 // ***  List of common keywords for settings ***

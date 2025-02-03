@@ -34,6 +34,7 @@ void Render()
     BeginDrawing();
         ClearBackground(BLACK);
         BeginMode2D(appCamera);
+            DrawAxis();
             RenderScene(currentScene);
         EndMode2D();
     EndDrawing();
@@ -45,4 +46,14 @@ void CloseApplication()
     UnloadScene(currentScene);
     MemFree(currentScene);
     CloseWindow();
+}
+
+void DrawAxis()
+{
+    if (DEVELOPER_MODE)
+    {
+        DrawLine(0, 0, 100, 0, BLUE);   // X axis
+        DrawLine(0, 0, 0, 100, RED);    // Y axis
+        DrawText("(0, 0)", 0, 0, 10, WHITE);
+    }
 }
