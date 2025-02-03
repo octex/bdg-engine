@@ -9,6 +9,11 @@ void InitStaticObj(Thing *thing)
     staticObj->sprite = LoadTexture(assets[thing->assets[0]].dir);
     thing->physicalBody->isStatic = true;
     thing->physicalBody->isTrigger = false;
+
+    // Pivot is centered
+    thing->position.x = (thing->position.x - staticObj->sprite.width) / 2;
+    thing->position.y = (thing->position.y - staticObj->sprite.height) / 2;
+
     thing->physicalBody->collider = {thing->position.x, thing->position.y, (float)staticObj->sprite.width, (float)staticObj->sprite.height};
 }
 
