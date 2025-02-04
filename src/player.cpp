@@ -52,11 +52,16 @@ void RenderPlayer(Thing *thing)
 {
     Player *player = (Player*)thing->thing;
     //DrawTexture(player->sprite, thing->position.x, thing->position.y, WHITE);
-    // DrawTextureEx(player->sprite, thing.position, player->rotation, 1, WHITE);
+    // DrawTextureEx(player->sprite, thing->position, 0, 1, WHITE);
 
-    DrawTexturePro(player->sprite, Rectangle{0, 0, (float)player->sprite.width, (float)player->sprite.height},
-                       Rectangle{ thing->position.x, thing->position.y, (float)player->sprite.width, (float)player->sprite.height },
-                       Vector2{(float)player->sprite.width / 2, (float)player->sprite.height / 2 }, player->rotation, WHITE);
+    Rectangle source = { 0.0f, 0.0f, (float)player->sprite.width, (float)player->sprite.height };
+    // Position needed a re-scale for some fucked up reason
+    Rectangle dest = { thing->position.x + ((float)player->sprite.width / 2),
+                        thing->position.y + ((float)player->sprite.height / 2),
+                        (float)player->sprite.width, (float)player->sprite.height };
+    Vector2 origin = {(float)player->sprite.width / 2, (float)player->sprite.height / 2 };
+
+    DrawTexturePro(player->sprite, source, dest, origin, player->rotation, WHITE);
 }
 
 void UnloadPlayer(Thing *thing)
