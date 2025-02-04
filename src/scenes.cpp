@@ -28,6 +28,7 @@ void UpdateScene(Scene *scene)
     }
     UpdateXAxis(scene);
     UpdateYAxis(scene);
+    HandleCollisions(scene);
 }
 
 void RenderScene(Scene *scene)
@@ -73,26 +74,10 @@ void UpdateXAxis(Scene *scene)
             bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
             if (collides)
             {
-                /*
-                    08/01/2025 - 00:45
-                    Dejo estas notas porque no me da la cabeza ya (en realidad me levanto temprano el cerebro me sobra la verdad en este momento)
-                        - No funciona con colisiones superpuestas
-                        - La misma logica aplicada en el eje Y rompe todo
-                        - No esta separando los objetos, solo lo "frena"
-                    Hay que hacer uso de los pares de colision y ver si realmente aplica
-                    en base a cada eje
-                */
-                float distance = 0;
-                if (dThing->collider.x < sThing->collider.x)
-                {
-                    distance = (dThing->collider.x + (dThing->collider.width)) - sThing->collider.x;
-                }
-                else if (dThing->collider.x > sThing->collider.x)
-                {
-                    distance = dThing->collider.x - (sThing->collider.x + (sThing->collider.width));
-                }
-                distance = -distance;                   // Todavia no se por que, pero es necesario.
-                dThing->thing->position.x += distance;
+                CollisionPair newCollisionPair = {0};
+                newCollisionPair.a = dThing->thing;
+                newCollisionPair.b = sThing->thing;
+                scene->collisionsToHandleX.push_back(newCollisionPair);
             }
         }
     }
@@ -108,27 +93,68 @@ void UpdateYAxis(Scene *scene)
         thing->collider.y = thing->thing->position.y;
     }
 
-    // for (PhysicThing *dThing : scene->dynamicThings)
-    // {
-    //     for (PhysicThing *sThing : scene->staticThings)
-    //     {
-    //         bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
-    //         if (collides)
-    //         {
-    //             float distance = 0;
-    //             if (dThing->collider.y < sThing->collider.y)
-    //             {
-    //                 distance = (dThing->collider.y + (dThing->collider.height)) - sThing->collider.y;
-    //             }
-    //             else if (dThing->collider.y > sThing->collider.y)
-    //             {
-    //                 distance = dThing->collider.y - (sThing->collider.y + (sThing->collider.height));
-    //             }
-    //             distance = -distance;                   // Todavia no se por que, pero es necesario.
-    //             dThing->thing->position.y += distance;
-    //         }
-    //     }
-    // }
+    for (PhysicThing *dThing : scene->dynamicThings)
+    {
+        for (PhysicThing *sThing : scene->staticThings)
+        {
+            bool collides = CheckCollisionRecs(dThing->collider, sThing->collider);
+            if (collides)
+            {
+                CollisionPair newCollisionPair = {0};
+                newCollisionPair.a = dThing->thing;
+                newCollisionPair.b = sThing->thing;
+                scene->collisionsToHandleY.push_back(newCollisionPair);
+            }
+        }
+    }
+}
+
+void HandleCollisions(Scene *scene)
+{
+    for (CollisionPair collPair : scene->collisionsToHandleX)
+    {
+        if (!CheckCollisionRecs(collPair.a->physicalBody->collider, collPair.b->physicalBody->collider))
+            continue;
+        float distance = 0;
+        
+        PhysicThing *dThing = collPair.a->physicalBody;
+        PhysicThing *sThing = collPair.b->physicalBody;
+        
+        if (dThing->collider.x < sThing->collider.x)
+        {
+            distance = (dThing->collider.x + (dThing->collider.width)) - sThing->collider.x;
+        }
+        else if (dThing->collider.x > sThing->collider.x)
+        {
+            distance = dThing->collider.x - (sThing->collider.x + (sThing->collider.width));
+        }
+        distance = -distance;                   // Todavia no se por que, pero es necesario.
+        dThing->thing->position.x += distance;
+        dThing->collider.x = dThing->thing->position.x;
+    }
+    scene->collisionsToHandleX.clear();
+    for (CollisionPair collPair : scene->collisionsToHandleY)
+    {
+        if (!CheckCollisionRecs(collPair.a->physicalBody->collider, collPair.b->physicalBody->collider))
+            continue;
+        float distance = 0;
+        
+        PhysicThing *dThing = collPair.a->physicalBody;
+        PhysicThing *sThing = collPair.b->physicalBody;
+        
+        if (dThing->collider.y < sThing->collider.y)
+        {
+            distance = (dThing->collider.y + (dThing->collider.height)) - sThing->collider.y;
+        }
+        else if (dThing->collider.y > sThing->collider.y)
+        {
+            distance = dThing->collider.y - (sThing->collider.y + (sThing->collider.height));
+        }
+        distance = -distance;                   // Todavia no se por que, pero es necesario.
+        dThing->thing->position.y += distance;
+        dThing->collider.y = dThing->thing->position.y;
+    }
+    scene->collisionsToHandleY.clear();
 }
 
 void AddThing(Scene *scene, Thing *thing)

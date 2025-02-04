@@ -34,6 +34,7 @@ void UnloadScene(Scene *scene);
 
 void UpdateXAxis(Scene *scene);
 void UpdateYAxis(Scene *scene);
+void HandleCollisions(Scene *scene);
 
 // -------------------------------------------
 //      Thing management related functions
