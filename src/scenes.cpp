@@ -180,25 +180,30 @@ Thing* FindThing(Scene *scene, int thingId)
     return scene->things[thingId];
 }
 
-// Scene LoadScene(const char *filename)
-// {
-//     Scene scene = {};
-//     FILE *file = fopen(filename, "rb");
-//     SceneFileHeader sceneHeader;
-//     fread(&sceneHeader, sizeof(SceneFileHeader), 1, file);
-//     scene.things.resize(sceneHeader.amountThings);
-//     for (int i = 0; i < sceneHeader.amountAssets; i++)
-//     {
-//         SceneFileAsset sceneAsset;
-//         fread(&sceneAsset, sizeof(SceneFileAsset), 1, file);
-//         LoadAssetById(sceneAsset.assetId);
-//     }
-//     for (int i = 0; i < sceneHeader.amountThings; i++)
-//     {
-//         SceneFileThing sceneThing;
-//         fread(&sceneThing, sizeof(SceneFileThing), 1, file);
-//         Thing newThing = {};
+Scene* LoadScene(int sceneId)
+{
+    Scene *scene = (Scene*)MemAlloc(sizeof(Scene));
+    Asset sceneAsset = assets[sceneId];
 
-//     }
-//     fclose(file);
-// }
+    if (!IsFileExtension(sceneAsset.dir, SCENE_FILEFORMAT))
+    {
+        return NULL;
+    }
+    FILE *file = fopen(sceneAsset.dir, "rb");
+    
+    SceneThingFile sceneThingFile;
+    fread(&sceneThingFile, sizeof(SceneThingFile), 1, file);
+    while(!feof(file))
+    {
+        Thing newThing = {0};
+        newThing.thingType = sceneThingFile.thingType;
+        newThing.position = (Vector2){sceneThingFile.x, sceneThingFile.y};
+        for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
+        {
+            newThing.assets.push_back(sceneThingFile.assets[i]);
+        }
+        newThing.hasPhysicalBody = sceneThingFile.hasPhysicalBody;
+        AddThing(scene, &newThing);
+    }
+    return scene;
+}
