@@ -180,25 +180,55 @@ Thing* FindThing(Scene *scene, int thingId)
     return scene->things[thingId];
 }
 
-// Scene LoadScene(const char *filename)
-// {
-//     Scene scene = {};
-//     FILE *file = fopen(filename, "rb");
-//     SceneFileHeader sceneHeader;
-//     fread(&sceneHeader, sizeof(SceneFileHeader), 1, file);
-//     scene.things.resize(sceneHeader.amountThings);
-//     for (int i = 0; i < sceneHeader.amountAssets; i++)
-//     {
-//         SceneFileAsset sceneAsset;
-//         fread(&sceneAsset, sizeof(SceneFileAsset), 1, file);
-//         LoadAssetById(sceneAsset.assetId);
-//     }
-//     for (int i = 0; i < sceneHeader.amountThings; i++)
-//     {
-//         SceneFileThing sceneThing;
-//         fread(&sceneThing, sizeof(SceneFileThing), 1, file);
-//         Thing newThing = {};
+void DebugThingData(SceneThingFile *sceneThingFile)
+{
+    std::cout << "Read Thing:" << std::endl;
+    std::cout << "\tType:" << sceneThingFile->thingType << std::endl;
+    std::cout << "\tPosition: " << sceneThingFile->x << " , " << sceneThingFile->y << std::endl;
+    std::cout << "\tAmount of assets: " << sceneThingFile->amountOfAssets << std::endl;
+}
 
-//     }
-//     fclose(file);
-// }
+Scene* LoadScene(int sceneId)
+{
+    Asset sceneAsset = assets[sceneId];
+
+    if (!IsFileExtension(sceneAsset.dir, SCENE_FILEFORMAT))
+    {
+        return NULL;
+    }
+    
+    Scene *scene = (Scene*)MemAlloc(sizeof(Scene));
+    FILE *file = fopen(sceneAsset.dir, "rb");
+
+    std::cout << "Loading scene: " << sceneAsset.dir << "..." << std::endl;
+
+    SceneThingFile sceneThingFile;
+
+    while(!feof(file))
+    {
+        sceneThingFile = {0};
+        fread(&sceneThingFile.hasPhysicalBody, sizeof(bool), 1, file);
+        fread(&sceneThingFile.ready, sizeof(bool), 1, file);
+        fread(&sceneThingFile.x, sizeof(float), 1, file);
+        fread(&sceneThingFile.y, sizeof(float), 1, file);
+        fread(&sceneThingFile.amountOfAssets, sizeof(int), 1, file);
+        fread(&sceneThingFile.thingType, sizeof(int), 1, file);
+        fread(&sceneThingFile.assets, sizeof(int), sceneThingFile.amountOfAssets, file);
+        if (sceneThingFile.ready)
+        {
+            DebugThingData(&sceneThingFile);
+            Thing *newThing = (Thing*)MemAlloc(sizeof(Thing));
+            newThing->thingType = (ThingType)sceneThingFile.thingType;
+            newThing->position = (Vector2){sceneThingFile.x, sceneThingFile.y};
+            for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
+            {
+                std::cout << "\t\tAsset id: " << sceneThingFile.assets[i] << std::endl;
+                newThing->assets.push_back(sceneThingFile.assets[i]);
+            }
+            newThing->hasPhysicalBody = sceneThingFile.hasPhysicalBody;
+            AddThing(scene, newThing);
+        }
+    }
+    std::cout << "Scene: " << sceneAsset.dir << " loaded" << std::endl;
+    return scene;
+}

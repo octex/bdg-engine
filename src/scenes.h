@@ -45,28 +45,21 @@ void DeleteThing(Scene *scene, int thingId);
 Thing* FindThing(Scene *scene, int thingId);
 
 
-// #define SCENE_FILE_FORMAT ".bdgscene"
+// ---------------------------------------
+//      Scene file management functions
+// ---------------------------------------
 
-//   =======================
-//  |   SceneFile Header    |
-//  |   SceneFile Assets    |
-//  |   SceneFile Things    |
-//   =======================
-// typedef struct SceneFileHeader {
-//     int sceneId, amountAssets, amountThings;
-// } SceneFileHeader;
+#define SCENE_FILEFORMAT ".bdgsc"
 
-// typedef struct SceneFileAsset {
-//     int assetId;
-// } SceneFileAsset;
+typedef struct SceneThingFile {
+    // Ready es un flag para evitar que cargue bytes vacios (ni idea por que hace tal cosa)
+    bool hasPhysicalBody, ready;
+    float x, y;
+    int amountOfAssets;
+    int thingType;
+    int assets[];
+} SceneThingFile;
 
-// typedef struct SceneFileThing {
-//     unsigned int thingId;
-//     ThingType thingType;
-//     Vector2 position;
-// } SceneFileThing;
-// Scene LoadScene(const char *filename);
-// void UnloadSceneToFile(Scene *scene);
-
+Scene* LoadScene(int sceneId);
 
 #endif
