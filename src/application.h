@@ -10,7 +10,7 @@
 #define TARGET_FPS 60
 
 #ifndef START_SCENE_ID
-    #define START_SCENE_ID 0
+    #define START_SCENE_ID 101
 #endif
 
 extern Camera2D appCamera;

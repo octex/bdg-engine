@@ -180,30 +180,55 @@ Thing* FindThing(Scene *scene, int thingId)
     return scene->things[thingId];
 }
 
+void DebugThingData(SceneThingFile *sceneThingFile)
+{
+    std::cout << "Read Thing:" << std::endl;
+    std::cout << "\tType:" << sceneThingFile->thingType << std::endl;
+    std::cout << "\tPosition: " << sceneThingFile->x << " , " << sceneThingFile->y << std::endl;
+    std::cout << "\tAmount of assets: " << sceneThingFile->amountOfAssets << std::endl;
+}
+
 Scene* LoadScene(int sceneId)
 {
-    Scene *scene = (Scene*)MemAlloc(sizeof(Scene));
     Asset sceneAsset = assets[sceneId];
 
     if (!IsFileExtension(sceneAsset.dir, SCENE_FILEFORMAT))
     {
         return NULL;
     }
-    FILE *file = fopen(sceneAsset.dir, "rb");
     
+    Scene *scene = (Scene*)MemAlloc(sizeof(Scene));
+    FILE *file = fopen(sceneAsset.dir, "rb");
+
+    std::cout << "Loading scene: " << sceneAsset.dir << "..." << std::endl;
+
     SceneThingFile sceneThingFile;
-    fread(&sceneThingFile, sizeof(SceneThingFile), 1, file);
+
     while(!feof(file))
     {
-        Thing newThing = {0};
-        newThing.thingType = sceneThingFile.thingType;
-        newThing.position = (Vector2){sceneThingFile.x, sceneThingFile.y};
-        for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
+        sceneThingFile = {0};
+        fread(&sceneThingFile.hasPhysicalBody, sizeof(bool), 1, file);
+        fread(&sceneThingFile.ready, sizeof(bool), 1, file);
+        fread(&sceneThingFile.x, sizeof(float), 1, file);
+        fread(&sceneThingFile.y, sizeof(float), 1, file);
+        fread(&sceneThingFile.amountOfAssets, sizeof(int), 1, file);
+        fread(&sceneThingFile.thingType, sizeof(int), 1, file);
+        fread(&sceneThingFile.assets, sizeof(int), sceneThingFile.amountOfAssets, file);
+        if (sceneThingFile.ready)
         {
-            newThing.assets.push_back(sceneThingFile.assets[i]);
+            DebugThingData(&sceneThingFile);
+            Thing *newThing = (Thing*)MemAlloc(sizeof(Thing));
+            newThing->thingType = (ThingType)sceneThingFile.thingType;
+            newThing->position = (Vector2){sceneThingFile.x, sceneThingFile.y};
+            for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
+            {
+                std::cout << "\t\tAsset id: " << sceneThingFile.assets[i] << std::endl;
+                newThing->assets.push_back(sceneThingFile.assets[i]);
+            }
+            newThing->hasPhysicalBody = sceneThingFile.hasPhysicalBody;
+            AddThing(scene, newThing);
         }
-        newThing.hasPhysicalBody = sceneThingFile.hasPhysicalBody;
-        AddThing(scene, &newThing);
     }
+    std::cout << "Scene: " << sceneAsset.dir << " loaded" << std::endl;
     return scene;
 }

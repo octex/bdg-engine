@@ -52,11 +52,11 @@ Thing* FindThing(Scene *scene, int thingId);
 #define SCENE_FILEFORMAT ".bdgsc"
 
 typedef struct SceneThingFile {
+    bool hasPhysicalBody, ready;
     float x, y;
     int amountOfAssets;
-    std::vector<int> assets;
-    ThingType thingType;
-    bool hasPhysicalBody;
+    int thingType;
+    int assets[];
 } SceneThingFile;
 
 Scene* LoadScene(int sceneId);
