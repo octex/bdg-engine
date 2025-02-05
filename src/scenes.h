@@ -52,6 +52,7 @@ Thing* FindThing(Scene *scene, int thingId);
 #define SCENE_FILEFORMAT ".bdgsc"
 
 typedef struct SceneThingFile {
+    // Ready es un flag para evitar que cargue bytes vacios (ni idea por que hace tal cosa)
     bool hasPhysicalBody, ready;
     float x, y;
     int amountOfAssets;
