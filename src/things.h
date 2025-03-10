@@ -20,6 +20,12 @@ typedef enum ThingType {
     TILESET,
 } ThingType;
 
+template <class T>
+struct ThingAttr {
+    std::map<const char *, T> attrs;
+//   T *ary;
+};
+
 typedef struct Thing
 {
     unsigned int thingId;
@@ -29,12 +35,48 @@ typedef struct Thing
     bool hasPhysicalBody;
     void *thing;
     struct PhysicThing *physicalBody;
+    ThingAttr<int> intAttrs;
+    ThingAttr<float> floatAttrs;
 } Thing;
 
 void InitThing(Thing *thing);
 void UpdateThing(Thing *thing);
 void RenderThing(Thing *thing);
 void UnloadThing(Thing *thing);
+
+// -----------------------------------------
+//  Animation structures
+// -----------------------------------------
+
+typedef enum ThingAnimationState
+{
+    READY,
+    PLAYING,
+    PAUSED
+} ThingAnimationState;
+
+typedef struct ThingAnimation
+{
+    ThingAnimationState state;
+    int frameRate, frames, frames_per_y_axis;
+    int frame = 0;
+    Texture2D sprites;
+} ThingAnimation;
+
+typedef struct ThingAnimator
+{
+    ThingAnimation *currentAnimation;
+    std::map <int, ThingAnimation*> animations;
+} ThingAnimator;
+
+void InitAnimator(ThingAnimator*, int);
+void SetAndPlayAnimation(ThingAnimator*, int);
+
+void UpdateStatus(ThingAnimation*, ThingAnimationState);
+void PlayAnimation(ThingAnimation*);
+void PauseAnimation(ThingAnimation*);
+void StopAnimation(ThingAnimation*);
+void RenderAnimation(ThingAnimation*);
 
 //  ---------------------------------------------------
 //  Physical thing definition
@@ -72,7 +114,13 @@ void RenderItem(Thing *thing);
 //  Player definition
 //  ---------------------------------
 
+typedef enum PlayerState {
+    IDLE,
+    WALKING
+} PlayerState;
+
 typedef struct Player {
+    ThingAnimator *animator;
     Texture2D sprite;
     float rotation, movementSpeed;
 } Player;
