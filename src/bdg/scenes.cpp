@@ -2,6 +2,19 @@
 
 #include <iostream>
 
+Scene* CreateScene()
+{
+    Scene *newScene = (Scene*)MemAlloc(sizeof(Scene));
+    newScene->thingsCounter = 0;
+    newScene->things = {};
+    newScene->physicalThings = {};
+    newScene->staticThings = {};
+    newScene->dynamicThings = {};
+    newScene->collisionsToHandleX = {};
+    newScene->collisionsToHandleY = {};
+    return newScene;
+}
+
 void InitScene(Scene *scene)
 {
     for (Thing *thing : scene->things)
@@ -219,7 +232,7 @@ Scene* LoadScene(int sceneId)
             DebugThingData(&sceneThingFile);
             Thing *newThing = (Thing*)MemAlloc(sizeof(Thing));
             newThing->thingType = (ThingType)sceneThingFile.thingType;
-            newThing->position = (Vector2){sceneThingFile.x, sceneThingFile.y};
+            newThing->position = {sceneThingFile.x, sceneThingFile.y};
             for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
             {
                 std::cout << "\t\tAsset id: " << sceneThingFile.assets[i] << std::endl;
