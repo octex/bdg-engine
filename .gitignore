@@ -35,4 +35,4 @@
 .vscode/*
 build/*
 
-src/bdg/main.cpp
+src/main.cpp
