@@ -1,8 +1,8 @@
 #include "things.h"
 
-void InitAnimator(ThingAnimator* animator, int animationId)
+void InitAnimator(ThingAnimator* animator)
 {
-
+    animator = (ThingAnimator*)MemAlloc(sizeof(ThingAnimator));
 }
 
 void SetAndPlayAnimation(ThingAnimator* animator, int animationId)

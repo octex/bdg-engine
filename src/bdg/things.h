@@ -73,7 +73,7 @@ typedef struct ThingAnimator
     std::map <int, ThingAnimation*> animations;
 } ThingAnimator;
 
-void InitAnimator(ThingAnimator*, int);
+void InitAnimator(ThingAnimator*);
 void SetAndPlayAnimation(ThingAnimator*, int);
 
 void UpdateStatus(ThingAnimation*, ThingAnimationState);
