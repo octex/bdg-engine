@@ -24,9 +24,7 @@ void InitPlayer(Thing *thing)
 {
     thing->thing = MemAlloc(sizeof(Player));
     Player *player = (Player*)thing->thing;
-    // player->sprite = LoadTexture(assets[thing->assets[0]].dir);
-    std::cout << "REFERENCIA>>>>>>>>>>>>>>>> " << thing->intAttrs.attrs["sprite_asset_id"] << std::endl;
-    player->sprite = LoadTexture(assets[thing->intAttrs.attrs["sprite_asset_id"]].dir);
+    player->sprite = LoadTexture(assets[thing->intAttrs["sprite_asset_id"]].dir);
 
     thing->position.x = (thing->position.x - player->sprite.width) / 2;
     thing->position.y = (thing->position.y - player->sprite.height) / 2;

@@ -2,6 +2,7 @@
 #define THINGS_H
 
 #include <vector>
+#include <string>
 #include "raylib.h"
 #include "assets.h"
 
@@ -20,12 +21,6 @@ typedef enum ThingType {
     TILESET,
 } ThingType;
 
-template <class T>
-struct ThingAttr {
-    std::map<const char *, T> attrs;
-//   T *ary;
-};
-
 typedef struct Thing
 {
     unsigned int thingId;
@@ -35,14 +30,20 @@ typedef struct Thing
     bool hasPhysicalBody;
     void *thing;
     struct PhysicThing *physicalBody;
-    ThingAttr<int> intAttrs;
-    ThingAttr<float> floatAttrs;
+    std::map<std::string, int> intAttrs;
+    std::map<std::string, float> floatAttrs;
 } Thing;
 
 void InitThing(Thing *thing);
 void UpdateThing(Thing *thing);
 void RenderThing(Thing *thing);
 void UnloadThing(Thing *thing);
+
+
+Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody);
+void SetThingAttr(Thing* thing, std::string key, int value);
+void SetThingAttr(Thing* thing, std::string key, float value);
+
 
 // -----------------------------------------
 //  Animation structures

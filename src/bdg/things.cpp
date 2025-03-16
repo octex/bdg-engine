@@ -1,5 +1,7 @@
 #include "things.h"
 
+#include <iostream>
+
 void InitThing(Thing *thing)
 {
     switch (thing->thingType)
@@ -71,4 +73,26 @@ void UnloadThing(Thing *thing)
         default:
             break;
     }
+    MemFree(thing);
+}
+
+Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody)
+{
+    Thing* newThing = (Thing*)MemAlloc(sizeof(Thing));
+    newThing->position = position;
+    newThing->thingType = thingType;
+    newThing->hasPhysicalBody = hasPhysicalBody;
+    newThing->intAttrs = {};
+    newThing->floatAttrs = {};
+    return newThing;
+}
+
+void SetThingAttr(Thing* thing, std::string key, int value)
+{
+    thing->intAttrs[key] = value;
+}
+
+void SetThingAttr(Thing* thing, std::string key, float value)
+{
+    thing->floatAttrs[key] = value;
 }
