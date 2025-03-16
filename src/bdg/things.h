@@ -6,9 +6,13 @@
 #include "raylib.h"
 #include "assets.h"
 
+#define ATTR_SPRITE "attr_sprite"
+#define ATTR_PHYSICS_VELOCITY "attr_velocity"
+
 //  ---------------------------------
 //  General definitions for Thing
 //  ---------------------------------
+
 
 typedef enum ThingType {
     PLAYER,
@@ -26,7 +30,6 @@ typedef struct Thing
     unsigned int thingId;
     Vector2 position;
     ThingType thingType;
-    std::vector<int> assets;
     bool hasPhysicalBody;
     void *thing;
     struct PhysicThing *physicalBody;

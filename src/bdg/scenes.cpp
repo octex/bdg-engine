@@ -223,7 +223,7 @@ Scene* LoadScene(int sceneId)
             for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
             {
                 std::cout << "\t\tAsset id: " << sceneThingFile.assets[i] << std::endl;
-                newThing->assets.push_back(sceneThingFile.assets[i]);
+                // newThing->assets.push_back(sceneThingFile.assets[i]);
             }
             newThing->hasPhysicalBody = sceneThingFile.hasPhysicalBody;
             AddThing(scene, newThing);

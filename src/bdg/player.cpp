@@ -24,7 +24,7 @@ void InitPlayer(Thing *thing)
 {
     thing->thing = MemAlloc(sizeof(Player));
     Player *player = (Player*)thing->thing;
-    player->sprite = LoadTexture(assets[thing->intAttrs["sprite_asset_id"]].dir);
+    player->sprite = LoadTexture(assets[thing->intAttrs[ATTR_SPRITE]].dir);
 
     thing->position.x = (thing->position.x - player->sprite.width) / 2;
     thing->position.y = (thing->position.y - player->sprite.height) / 2;
@@ -32,7 +32,7 @@ void InitPlayer(Thing *thing)
     thing->physicalBody->isStatic = false;
     thing->physicalBody->isTrigger = false;
     thing->physicalBody->collider = {thing->position.x, thing->position.y, (float)player->sprite.width, (float)player->sprite.height};
-    player->movementSpeed = 5;
+    player->movementSpeed = thing->floatAttrs[ATTR_PHYSICS_VELOCITY];
 }
 
 void UpdatePlayer(Thing *thing)

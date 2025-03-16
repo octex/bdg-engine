@@ -3,7 +3,7 @@
 void InitTileSet(Thing *thing)
 {
     TileSet *tileSet = (TileSet*)thing->thing;
-    tileSet->sprite = LoadTexture(assets[thing->assets[0]].dir);
+    tileSet->sprite = LoadTexture(assets[thing->intAttrs[ATTR_SPRITE]].dir);
 }
 
 void UnloadTileSet(Thing *thing)
