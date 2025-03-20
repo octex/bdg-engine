@@ -1,1 +1,1 @@
-g++ ./src/*.cpp -I ./src -I ./include -l raylib -o ./build/tbox
+g++ ./src/main.cpp ./src/bdg/*.cpp -I ./src/bdg -I ./include -l raylib -o ./build/tbox
