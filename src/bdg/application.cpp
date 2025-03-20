@@ -19,7 +19,10 @@ void InitApplication()
     appCamera.offset = Vector2{screenWidth/2.0f, screenHeight/2.0f };
     appCamera.zoom = 1;
     appCamera.rotation = 0;
-    currentScene = LoadScene(START_SCENE_ID);
+    if (!currentScene)
+    {
+        currentScene = LoadScene(START_SCENE_ID);
+    }
     InitScene(currentScene);
 }
 

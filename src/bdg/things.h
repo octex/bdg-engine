@@ -2,12 +2,17 @@
 #define THINGS_H
 
 #include <vector>
+#include <string>
 #include "raylib.h"
 #include "assets.h"
+
+#define ATTR_SPRITE "attr_sprite"
+#define ATTR_PHYSICS_VELOCITY "attr_velocity"
 
 //  ---------------------------------
 //  General definitions for Thing
 //  ---------------------------------
+
 
 typedef enum ThingType {
     PLAYER,
@@ -25,16 +30,57 @@ typedef struct Thing
     unsigned int thingId;
     Vector2 position;
     ThingType thingType;
-    std::vector<int> assets;
     bool hasPhysicalBody;
     void *thing;
     struct PhysicThing *physicalBody;
+    std::map<std::string, int> intAttrs;
+    std::map<std::string, float> floatAttrs;
 } Thing;
 
 void InitThing(Thing *thing);
 void UpdateThing(Thing *thing);
 void RenderThing(Thing *thing);
 void UnloadThing(Thing *thing);
+
+
+Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody);
+void SetThingAttr(Thing* thing, std::string key, int value);
+void SetThingAttr(Thing* thing, std::string key, float value);
+
+
+// -----------------------------------------
+//  Animation structures
+// -----------------------------------------
+
+typedef enum ThingAnimationState
+{
+    READY,
+    PLAYING,
+    PAUSED
+} ThingAnimationState;
+
+typedef struct ThingAnimation
+{
+    ThingAnimationState state;
+    int frameRate, frames, frames_per_y_axis;
+    int frame = 0;
+    Texture2D sprites;
+} ThingAnimation;
+
+typedef struct ThingAnimator
+{
+    ThingAnimation *currentAnimation;
+    std::map <int, ThingAnimation*> animations;
+} ThingAnimator;
+
+void InitAnimator(ThingAnimator*);
+void SetAndPlayAnimation(ThingAnimator*, int);
+
+void UpdateStatus(ThingAnimation*, ThingAnimationState);
+void PlayAnimation(ThingAnimation*);
+void PauseAnimation(ThingAnimation*);
+void StopAnimation(ThingAnimation*);
+void RenderAnimation(ThingAnimation*);
 
 //  ---------------------------------------------------
 //  Physical thing definition
@@ -72,7 +118,13 @@ void RenderItem(Thing *thing);
 //  Player definition
 //  ---------------------------------
 
+typedef enum PlayerState {
+    IDLE,
+    WALKING
+} PlayerState;
+
 typedef struct Player {
+    ThingAnimator *animator;
     Texture2D sprite;
     float rotation, movementSpeed;
 } Player;

@@ -2,7 +2,7 @@
 
 void InitTileMap(Thing *thing)
 {
-
+    
 }
 
 void UpdateTileMap(Thing *thing)

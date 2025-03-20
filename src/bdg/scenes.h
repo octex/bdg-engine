@@ -28,6 +28,8 @@ void UpdateScene(Scene *scene);
 void RenderScene(Scene *scene);
 void UnloadScene(Scene *scene);
 
+Scene* CreateScene();
+
 // -----------------------------------
 //      Physics related functions
 // -----------------------------------

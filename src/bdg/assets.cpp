@@ -28,5 +28,5 @@ void LoadAssetsDirs()
     {
         exit(-1);
     }
-    assetsDirs = LoadDirectoryFiles(ASSETS_DIR);
+    assetsDirs = LoadDirectoryFilesEx(ASSETS_DIR, NULL, true);
 }
