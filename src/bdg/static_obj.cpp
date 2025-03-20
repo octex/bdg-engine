@@ -6,7 +6,7 @@ void InitStaticObj(Thing *thing)
 {
     thing->thing = MemAlloc(sizeof(StaticObj));
     StaticObj *staticObj = (StaticObj*)thing->thing;
-    staticObj->sprite = LoadTexture(assets[thing->assets[0]].dir);
+    staticObj->sprite = LoadTexture(assets[thing->intAttrs[ATTR_SPRITE]].dir);
 
     // Pivot is centered
     thing->position.x = (thing->position.x - staticObj->sprite.width) / 2;
