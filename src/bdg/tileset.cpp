@@ -4,7 +4,7 @@ void InitTileSet(Thing *thing)
 {
     thing->thing = (TileSet*)MemAlloc(sizeof(TileSet));
     TileSet *tileSet = (TileSet*)thing->thing;
-    tileSet->sprite = LoadTexture(assets[thing->intAttrs[ATTR_SPRITE]].dir);
+    tileSet->sprite = LoadTexture(assets[thing->strAttrs[ATTR_SPRITE]]);
     tileSet->tileWidth = thing->intAttrs[ATTR_TILE_WIDTH];
     tileSet->tileHeight = thing->intAttrs[ATTR_TILE_HEIGHT];
 }

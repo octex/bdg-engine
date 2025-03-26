@@ -39,6 +39,7 @@ typedef struct Thing
     struct PhysicThing *physicalBody;
     std::map<std::string, int> intAttrs;
     std::map<std::string, float> floatAttrs;
+    std::map<std::string, std::string> strAttrs;
 } Thing;
 
 void InitThing(Thing *thing);
@@ -50,6 +51,7 @@ void UnloadThing(Thing *thing);
 Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody);
 void SetThingAttr(Thing* thing, std::string key, int value);
 void SetThingAttr(Thing* thing, std::string key, float value);
+void SetThingAttr(Thing* thing, std::string key, std::string value);
 
 
 // -----------------------------------------

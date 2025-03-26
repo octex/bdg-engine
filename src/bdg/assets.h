@@ -2,6 +2,7 @@
 #define TBOX_ASSETS
 
 #include <map>
+#include <string>
 #include <stdlib.h>
 #include "raylib.h"
 
@@ -13,7 +14,7 @@ typedef struct Asset
     const char *dir;
 } Asset;
 
-extern std::map<int, Asset> assets;
+extern std::map<std::string, const char *> assets;
 extern FilePathList assetsDirs;
 
 void LoadAssetsDirs();

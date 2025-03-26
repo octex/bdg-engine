@@ -25,7 +25,7 @@ void InitPlayer(Thing *thing)
     thing->thing = MemAlloc(sizeof(Player));
     Player *player = (Player*)thing->thing;
     InitAnimator(player->animator);
-    player->sprite = LoadTexture(assets[thing->intAttrs[ATTR_SPRITE]].dir);
+    player->sprite = LoadTexture(assets[thing->strAttrs[ATTR_SPRITE]]);
 
     thing->position.x = (thing->position.x - player->sprite.width) / 2;
     thing->position.y = (thing->position.y - player->sprite.height) / 2;

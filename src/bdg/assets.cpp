@@ -1,6 +1,9 @@
 #include "assets.h"
 
-std::map<int, Asset> assets;
+#include <iostream>
+
+std::map<int, Asset> _assets;
+std::map<std::string, const char *> assets;
 FilePathList assetsDirs;
 
 
@@ -11,13 +14,7 @@ void LoadAssets()
     {
         const char *path = assetsDirs.paths[i];
         const char *filename = GetFileName(path);
-        const char *fileNameWithoutExt = GetFileNameWithoutExt(path);
-        const char *fileExtension = GetFileExtension(filename);
-        int assetId = atoi(fileNameWithoutExt);
-        Asset newAsset = {};
-        newAsset.id = assetId;
-        newAsset.dir = path;
-        assets.insert(std::pair<int, Asset>(assetId, newAsset));
+        assets.insert(std::pair<std::string, const char *>(filename, path));
     }
 }
 

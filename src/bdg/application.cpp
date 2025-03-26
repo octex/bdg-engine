@@ -21,7 +21,7 @@ void InitApplication()
     appCamera.rotation = 0;
     if (!currentScene)
     {
-        currentScene = LoadScene(START_SCENE_ID);
+        currentScene = LoadScene(assets[START_SCENE]);
     }
     InitScene(currentScene);
 }
