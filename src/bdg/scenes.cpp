@@ -245,3 +245,38 @@ Scene* LoadScene(int sceneId)
     std::cout << "Scene: " << sceneAsset.dir << " loaded" << std::endl;
     return scene;
 }
+
+Scene* LoadScene(std::string filename)
+{
+    Scene *newScene = CreateScene();
+    sol::state lua = ReadLuaFile(filename);
+
+    sol::table things = lua["things"];
+    sol::table setup = lua["setup"];
+    int amountOfThings = (int)setup["things_len"];
+
+    for (int i = 1; i <= amountOfThings; i++)
+    {
+        sol::table thing = things[i];
+
+        Vector2 thingPosition = (Vector2){thing["x"], thing["y"]};
+        ThingType thingType = (ThingType)thing["thing_type"];
+        sol::table thingAttrs = thing["attributes"];
+        Thing *newThing = CreateThing(thingPosition, thingType, thing["has_physical_body"]);
+        for (int i = 1; i <= (int)thing["attributes_len"]; i++)
+        {
+            sol::table attr = thingAttrs[i];
+            if ((std::string)attr["datatype"] == "i")
+            {
+                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (int)attr["value"]);
+            }
+            else if ((std::string)attr["datatype"] == "f")
+            {
+                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (float)attr["value"]);
+            }
+        }
+        AddThing(newScene, newThing);
+    }
+
+    return newScene;
+}

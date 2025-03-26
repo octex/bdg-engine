@@ -4,6 +4,9 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
+#include <string>
+// #include "sol/sol.hpp"
+#include "bdg_lua.h"
 #include "things.h"
 #include "assets.h"
 #include "settings.h"
@@ -63,5 +66,6 @@ typedef struct SceneThingFile {
 } SceneThingFile;
 
 Scene* LoadScene(int sceneId);
+Scene* LoadScene(std::string filePath);
 
 #endif

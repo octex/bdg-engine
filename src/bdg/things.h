@@ -6,8 +6,12 @@
 #include "raylib.h"
 #include "assets.h"
 
-#define ATTR_SPRITE "attr_sprite"
-#define ATTR_PHYSICS_VELOCITY "attr_velocity"
+#define ATTR_SPRITE             "attr_sprite"
+#define ATTR_PHYSICS_VELOCITY   "attr_velocity"
+#define ATTR_TILE_WIDTH         "tile_width"
+#define ATTR_TILE_HEIGHT        "tile_height"
+#define ATTR_TILE_CELL_X        "tile_x"
+#define ATTR_TILE_CELL_Y        "tile_y"
 
 //  ---------------------------------
 //  General definitions for Thing
