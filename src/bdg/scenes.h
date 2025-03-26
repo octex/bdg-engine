@@ -5,7 +5,6 @@
 #include <raymath.h>
 #include <vector>
 #include <string>
-// #include "sol/sol.hpp"
 #include "bdg_lua.h"
 #include "things.h"
 #include "assets.h"
