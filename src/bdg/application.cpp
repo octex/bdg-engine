@@ -37,6 +37,7 @@ void Render()
 {
     BeginDrawing();
         ClearBackground(BLACK);
+        DrawFPS(0, 0);
         BeginMode2D(appCamera);
             DrawAxis();
             RenderScene(currentScene);

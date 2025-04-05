@@ -37,6 +37,7 @@ typedef struct Thing
     bool hasPhysicalBody;
     void *thing;
     struct PhysicThing *physicalBody;
+    Thing *parent;                              // TODO: Implementar logica de nodo padre para las posiciones.
     std::map<std::string, int> intAttrs;
     std::map<std::string, float> floatAttrs;
     std::map<std::string, std::string> strAttrs;

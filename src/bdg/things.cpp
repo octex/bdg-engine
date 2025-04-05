@@ -85,6 +85,7 @@ Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody)
     newThing->intAttrs = {};
     newThing->floatAttrs = {};
     newThing->strAttrs = {};
+    // newThing->parent = parent;
     return newThing;
 }
 
