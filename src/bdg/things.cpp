@@ -84,6 +84,8 @@ Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody)
     newThing->hasPhysicalBody = hasPhysicalBody;
     newThing->intAttrs = {};
     newThing->floatAttrs = {};
+    newThing->strAttrs = {};
+    // newThing->parent = parent;
     return newThing;
 }
 
@@ -95,4 +97,9 @@ void SetThingAttr(Thing* thing, std::string key, int value)
 void SetThingAttr(Thing* thing, std::string key, float value)
 {
     thing->floatAttrs[key] = value;
+}
+
+void SetThingAttr(Thing* thing, std::string key, std::string value)
+{
+    thing->strAttrs[key] = value;
 }

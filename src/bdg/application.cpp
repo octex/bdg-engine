@@ -21,7 +21,7 @@ void InitApplication()
     appCamera.rotation = 0;
     if (!currentScene)
     {
-        currentScene = LoadScene(START_SCENE_ID);
+        currentScene = LoadScene(assets[START_SCENE]);
     }
     InitScene(currentScene);
 }
@@ -37,6 +37,7 @@ void Render()
 {
     BeginDrawing();
         ClearBackground(BLACK);
+        DrawFPS(0, 0);
         BeginMode2D(appCamera);
             DrawAxis();
             RenderScene(currentScene);

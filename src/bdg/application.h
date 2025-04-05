@@ -9,8 +9,8 @@
 #define APPLICATION_NAME "BDG"
 #define TARGET_FPS 60
 
-#ifndef START_SCENE_ID
-    #define START_SCENE_ID 101
+#ifndef START_SCENE
+    #define START_SCENE "scene_00.lua"
 #endif
 
 extern Camera2D appCamera;

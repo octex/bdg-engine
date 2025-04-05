@@ -4,6 +4,8 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
+#include <string>
+#include "bdg_lua.h"
 #include "things.h"
 #include "assets.h"
 #include "settings.h"
@@ -51,17 +53,6 @@ Thing* FindThing(Scene *scene, int thingId);
 //      Scene file management functions
 // ---------------------------------------
 
-#define SCENE_FILEFORMAT ".bdgsc"
-
-typedef struct SceneThingFile {
-    // Ready es un flag para evitar que cargue bytes vacios (ni idea por que hace tal cosa)
-    bool hasPhysicalBody, ready;
-    float x, y;
-    int amountOfAssets;
-    int thingType;
-    int assets[];
-} SceneThingFile;
-
-Scene* LoadScene(int sceneId);
+Scene* LoadScene(std::string filePath);
 
 #endif

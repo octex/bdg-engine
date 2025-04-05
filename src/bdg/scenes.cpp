@@ -193,55 +193,42 @@ Thing* FindThing(Scene *scene, int thingId)
     return scene->things[thingId];
 }
 
-void DebugThingData(SceneThingFile *sceneThingFile)
+
+Scene* LoadScene(std::string filename)
 {
-    std::cout << "Read Thing:" << std::endl;
-    std::cout << "\tType:" << sceneThingFile->thingType << std::endl;
-    std::cout << "\tPosition: " << sceneThingFile->x << " , " << sceneThingFile->y << std::endl;
-    std::cout << "\tAmount of assets: " << sceneThingFile->amountOfAssets << std::endl;
-}
+    Scene *newScene = CreateScene();
+    sol::state lua = ReadLuaFile(filename);
 
-Scene* LoadScene(int sceneId)
-{
-    Asset sceneAsset = assets[sceneId];
+    sol::table things = lua["things"];
+    sol::table setup = lua["setup"];
+    int amountOfThings = (int)setup["things_len"];
 
-    if (!IsFileExtension(sceneAsset.dir, SCENE_FILEFORMAT))
+    for (int i = 1; i <= amountOfThings; i++)
     {
-        return NULL;
-    }
-    
-    Scene *scene = (Scene*)MemAlloc(sizeof(Scene));
-    FILE *file = fopen(sceneAsset.dir, "rb");
+        sol::table thing = things[i];
 
-    std::cout << "Loading scene: " << sceneAsset.dir << "..." << std::endl;
-
-    SceneThingFile sceneThingFile;
-
-    while(!feof(file))
-    {
-        sceneThingFile = {0};
-        fread(&sceneThingFile.hasPhysicalBody, sizeof(bool), 1, file);
-        fread(&sceneThingFile.ready, sizeof(bool), 1, file);
-        fread(&sceneThingFile.x, sizeof(float), 1, file);
-        fread(&sceneThingFile.y, sizeof(float), 1, file);
-        fread(&sceneThingFile.amountOfAssets, sizeof(int), 1, file);
-        fread(&sceneThingFile.thingType, sizeof(int), 1, file);
-        fread(&sceneThingFile.assets, sizeof(int), sceneThingFile.amountOfAssets, file);
-        if (sceneThingFile.ready)
+        Vector2 thingPosition = (Vector2){thing["x"], thing["y"]};
+        ThingType thingType = (ThingType)thing["thing_type"];
+        sol::table thingAttrs = thing["attributes"];
+        Thing *newThing = CreateThing(thingPosition, thingType, thing["has_physical_body"]);
+        for (int i = 1; i <= (int)thing["attributes_len"]; i++)
         {
-            DebugThingData(&sceneThingFile);
-            Thing *newThing = (Thing*)MemAlloc(sizeof(Thing));
-            newThing->thingType = (ThingType)sceneThingFile.thingType;
-            newThing->position = {sceneThingFile.x, sceneThingFile.y};
-            for (int i = 0; i < sceneThingFile.amountOfAssets; i++)
+            sol::table attr = thingAttrs[i];
+            if ((std::string)attr["datatype"] == "i")
             {
-                std::cout << "\t\tAsset id: " << sceneThingFile.assets[i] << std::endl;
-                // newThing->assets.push_back(sceneThingFile.assets[i]);
+                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (int)attr["value"]);
             }
-            newThing->hasPhysicalBody = sceneThingFile.hasPhysicalBody;
-            AddThing(scene, newThing);
+            else if ((std::string)attr["datatype"] == "f")
+            {
+                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (float)attr["value"]);
+            }
+            else if ((std::string)attr["datatype"] == "s")
+            {
+                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (std::string)attr["value"]);
+            }
         }
+        AddThing(newScene, newThing);
     }
-    std::cout << "Scene: " << sceneAsset.dir << " loaded" << std::endl;
-    return scene;
+
+    return newScene;
 }

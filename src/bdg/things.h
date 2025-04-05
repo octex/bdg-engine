@@ -6,8 +6,12 @@
 #include "raylib.h"
 #include "assets.h"
 
-#define ATTR_SPRITE "attr_sprite"
-#define ATTR_PHYSICS_VELOCITY "attr_velocity"
+#define ATTR_SPRITE             "attr_sprite"
+#define ATTR_PHYSICS_VELOCITY   "attr_velocity"
+#define ATTR_TILE_WIDTH         "tile_width"
+#define ATTR_TILE_HEIGHT        "tile_height"
+#define ATTR_TILE_CELL_X        "tile_x"
+#define ATTR_TILE_CELL_Y        "tile_y"
 
 //  ---------------------------------
 //  General definitions for Thing
@@ -33,8 +37,10 @@ typedef struct Thing
     bool hasPhysicalBody;
     void *thing;
     struct PhysicThing *physicalBody;
+    Thing *parent;                              // TODO: Implementar logica de nodo padre para las posiciones.
     std::map<std::string, int> intAttrs;
     std::map<std::string, float> floatAttrs;
+    std::map<std::string, std::string> strAttrs;
 } Thing;
 
 void InitThing(Thing *thing);
@@ -46,6 +52,7 @@ void UnloadThing(Thing *thing);
 Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody);
 void SetThingAttr(Thing* thing, std::string key, int value);
 void SetThingAttr(Thing* thing, std::string key, float value);
+void SetThingAttr(Thing* thing, std::string key, std::string value);
 
 
 // -----------------------------------------
