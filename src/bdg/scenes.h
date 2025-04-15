@@ -10,6 +10,8 @@
 #include "assets.h"
 #include "settings.h"
 
+extern Thing *gamePlayer;
+
 // ----------------------------------------
 //      Scene struct and main functions
 // ----------------------------------------

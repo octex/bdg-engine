@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+Thing *gamePlayer;
+
 Scene* CreateScene()
 {
     Scene *newScene = (Scene*)MemAlloc(sizeof(Scene));
@@ -228,6 +230,10 @@ Scene* LoadScene(std::string filename)
             }
         }
         AddThing(newScene, newThing);
+        if (newThing->thingType == PLAYER)
+        {
+            gamePlayer = newThing;
+        }
     }
 
     return newScene;

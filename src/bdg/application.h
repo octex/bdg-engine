@@ -15,7 +15,6 @@
 
 extern Camera2D appCamera;
 extern Scene *currentScene;
-extern Thing *gamePlayer;
 extern float deltaTime;
 
 void InitApplication();

@@ -4,7 +4,6 @@
 
 Scene *currentScene;
 Camera2D appCamera;
-Thing *gamePlayer;
 float deltaTime;
 
 void InitApplication()
