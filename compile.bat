@@ -1,1 +1,1 @@
-g++ ./src/*.cpp -I ./src -I ./include -L ./lib/* -o ./build/tbox.exe
+g++ ./src/main.cpp ./src/bdg/*.cpp -I ./src/bdg -I ./include -L ./lib/* -o ./build/bdg.exe
