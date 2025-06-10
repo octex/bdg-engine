@@ -15,6 +15,9 @@ void InitThing(Thing *thing)
         case TILESET:
             InitTileSet(thing);
             break;
+        case INTERACTABLE:
+            InitInteractable(thing);
+            break;
         default:
             break;
     }
@@ -30,6 +33,9 @@ void UpdateThing(Thing *thing)
             break;
         case STATIC:
             UpdateStaticObj(thing);
+            break;
+        case INTERACTABLE:
+            InitInteractable(thing);
             break;
         default:
             break;
@@ -48,6 +54,9 @@ void RenderThing(Thing *thing)
             break;
         case TILEMAP:
             RenderTileMap(thing);
+            break;
+        case INTERACTABLE:
+            InitInteractable(thing);
             break;
         default:
             break;
@@ -69,6 +78,9 @@ void UnloadThing(Thing *thing)
             break;
         case TILESET:
             UnloadTileSet(thing);
+            break;
+        case INTERACTABLE:
+            InitInteractable(thing);
             break;
         default:
             break;

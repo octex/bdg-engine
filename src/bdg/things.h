@@ -12,6 +12,7 @@
 #define ATTR_TILE_HEIGHT        "tile_height"
 #define ATTR_TILE_CELL_X        "tile_x"
 #define ATTR_TILE_CELL_Y        "tile_y"
+#define ATTR_SCRIPT             "attr_script"
 
 //  ---------------------------------
 //  General definitions for Thing
@@ -154,6 +155,22 @@ void InitStaticObj(Thing *thing);
 void UpdateStaticObj(Thing *thing);
 void RenderStaticObj(Thing *thing);
 void UnloadStaticObj(Thing *thing);
+
+//  ---------------------------------
+//  Interactable obj definition
+//  ---------------------------------
+
+typedef struct Interactable
+{
+    Texture2D sprite;
+    std::string scriptSequence;
+} Interactable;
+
+void InitInteractable(Thing *thing);
+void UpdateInteractable(Thing *thing);
+void RenderInteractable(Thing *thing);
+void UnloadInteractable(Thing *thing);
+void Interact(Interactable *interactable);
 
 //  ---------------------------------
 //  TileSet definition

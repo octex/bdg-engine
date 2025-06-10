@@ -41,8 +41,9 @@ void UpdatePlayer(Thing *thing)
     Player *player = (Player*)thing->thing;
     Vector2 mousePosition = GetMousePosition();
     mousePosition = GetScreenToWorld2D(mousePosition, appCamera);
-    mousePosition.x -= thing->position.x;
-    mousePosition.y -= thing->position.y;
+    mousePosition = Vector2Subtract(mousePosition, thing->position);
+    // mousePosition.x -= thing->position.x;
+    // mousePosition.y -= thing->position.y;
     player->rotation = atan2(mousePosition.x, mousePosition.y) * -RAD2DEG;
 
     MovePlayer(thing, player, mousePosition);
@@ -63,6 +64,14 @@ void RenderPlayer(Thing *thing)
     Vector2 origin = {(float)player->sprite.width / 2, (float)player->sprite.height / 2 };
 
     DrawTexturePro(player->sprite, source, dest, origin, player->rotation, WHITE);
+
+    Vector2 ray = GetScreenToWorld2D(GetMousePosition(), appCamera);
+    ray = Vector2Subtract(ray, thing->position);
+    ray = Vector2Normalize(ray);
+    ray = Vector2Scale(ray, 100);
+    ray = Vector2Add(ray, {dest.x, dest.y});
+    DrawLineV({dest.x, dest.y},
+                ray, RED);
 }
 
 void UnloadPlayer(Thing *thing)
