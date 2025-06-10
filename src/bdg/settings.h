@@ -2,38 +2,30 @@
 #define SETTINGS_H
 
 #include <raylib.h>
-#include <fstream>
 #include <string>
 #include <string.h>
-#include <map>
+#include "toml.hpp"
 
-#define SETTINGS_FILENAME "settings.cnf"
-
-#define SCREEN_WIDTH "scrw"
-#define SCREEN_HEIGHT "scrh"
-#define MUSIC_VOLUME "mvol"
-#define SFX_VOLUME "svol"
+#define SETTINGS_FILENAME "settings.toml"
+#define DEFAULT_WIN_HEIGHT 768
+#define DEFAULT_WIN_WIDTH 1024
+#define DEFAULT_WIN_FULLSCREEN true
 
 /*  FLAGS   */
 #define DEVELOPER_MODE true
 
-extern std::map<std::string, int> settings;
+using namespace std::literals;
 
-// ***  List of common keywords for settings ***
-// screen_width:    scrw
-// screen_height:   scrh
-// fullscreen:      scrf
-// music_volume:    mvol
-// sfx_volume:      svol
-
-typedef struct SettingsData
+typedef struct ApplicationSettings
 {
-    char key[5];
-    int data;
-} SettingsData;
+    int screenWidth, screenHeight;
+    bool fullscreen;
+    float musicVol, soundVol;
+} ApplicationSettings;
 
+extern ApplicationSettings settings;
 
 void LoadSettings();
-int GetSetting(std::string key);
+void UpdateSettings();
 
 #endif

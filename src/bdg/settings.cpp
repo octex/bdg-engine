@@ -1,44 +1,19 @@
 #include "settings.h"
 
-std::map<std::string, int> settings;
+ApplicationSettings settings;
 
 #include <iostream>
 
 void LoadSettings()
 {
-    bool settingsFileExists = FileExists(SETTINGS_FILENAME);
-    if (!settingsFileExists)
+    if (!FileExists(SETTINGS_FILENAME))
     {
-        FILE *newSettingsFile = fopen(SETTINGS_FILENAME, "wb");
-        int amount = 2;
-        char keys[2][5] = {SCREEN_WIDTH, SCREEN_HEIGHT};
-        int values[] = {1280, 1024};
-        for (int i = 0; i < amount; i++)
-        {
-            SettingsData settingsData = {};
-            strcpy(settingsData.key, keys[i]);
-            settingsData.data = values[i];
-            settings.insert({settingsData.key, settingsData.data});
-            fwrite(&settingsData, sizeof(SettingsData), 1, newSettingsFile);
-        }
-        fclose(newSettingsFile);
+        std::string baseSettings = "[screen]\nheight = " + std::to_string(DEFAULT_WIN_HEIGHT) + "\nwidth = " + std::to_string(DEFAULT_WIN_WIDTH) + "\nfullscreen = true";
+        SaveFileText(SETTINGS_FILENAME, (char *)baseSettings.c_str());
     }
-    else
-    {
-        FILE *settingsFile = fopen(SETTINGS_FILENAME, "rb");
-        SettingsData settingsDataR = {};
-        fread(&settingsDataR, sizeof(SettingsData), 1, settingsFile);
-        settings.insert({settingsDataR.key, settingsDataR.data});
-        while (!feof(settingsFile))
-        {
-            fread(&settingsDataR, sizeof(SettingsData), 1, settingsFile);
-            settings.insert({settingsDataR.key, settingsDataR.data});
-        }
-        fclose(settingsFile);
-    }
-}
-
-int GetSetting(std::string key)
-{
-    return settings[key];
+    auto config = toml::parse_file(SETTINGS_FILENAME);
+    settings = {};
+    settings.fullscreen = config["screen"]["fullscreen"].value_or(DEFAULT_WIN_FULLSCREEN);
+    settings.screenHeight = config["screen"]["height"].value_or(DEFAULT_WIN_HEIGHT);
+    settings.screenWidth = config["screen"]["width"].value_or(DEFAULT_WIN_WIDTH);
 }
