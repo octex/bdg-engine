@@ -10,10 +10,14 @@ float deltaTime;
 void InitApplication()
 {
     LoadSettings();
-    int screenWidth = settings[SCREEN_WIDTH];
-    int screenHeight = settings[SCREEN_HEIGHT];
+    int screenWidth = settings.screenWidth;
+    int screenHeight = settings.screenHeight;
     InitWindow(screenWidth, screenHeight, APPLICATION_NAME);
     SetTargetFPS(TARGET_FPS);
+    if (settings.fullscreen)
+    {
+        ToggleFullscreen();
+    }
     LoadAssets();
     appCamera = {0};
     appCamera.offset = Vector2{screenWidth/2.0f, screenHeight/2.0f };
