@@ -12,6 +12,7 @@
 #define ATTR_TILE_HEIGHT        "tile_height"
 #define ATTR_TILE_CELL_X        "tile_x"
 #define ATTR_TILE_CELL_Y        "tile_y"
+#define ATTR_SCRIPT             "attr_script"
 
 //  ---------------------------------
 //  General definitions for Thing
@@ -133,6 +134,8 @@ typedef enum PlayerState {
 typedef struct Player {
     ThingAnimator *animator;
     Texture2D sprite;
+    Vector2 rayPoint;
+    Thing *interactable;
     float rotation, movementSpeed;
 } Player;
 
@@ -154,6 +157,22 @@ void InitStaticObj(Thing *thing);
 void UpdateStaticObj(Thing *thing);
 void RenderStaticObj(Thing *thing);
 void UnloadStaticObj(Thing *thing);
+
+//  ---------------------------------
+//  Interactable obj definition
+//  ---------------------------------
+
+typedef struct Interactable
+{
+    Texture2D sprite;
+    bool hover;
+} Interactable;
+
+void InitInteractable(Thing *thing);
+void UpdateInteractable(Thing *thing);
+void RenderInteractable(Thing *thing);
+void UnloadInteractable(Thing *thing);
+void Interact(Thing *thing);
 
 //  ---------------------------------
 //  TileSet definition

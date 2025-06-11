@@ -22,6 +22,7 @@ sol::state ReadLuaFile(std::string filename)
     luaState.set("ATTR_TILE_H", ATTR_TILE_HEIGHT);
     luaState.set("ATTR_TILE_X", ATTR_TILE_CELL_X);
     luaState.set("ATTR_TILE_Y", ATTR_TILE_CELL_Y);
+    luaState.set("ATTR_SCRIPT", ATTR_SCRIPT);
 
     luaState.script_file(filename);
     return luaState;
