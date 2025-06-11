@@ -51,10 +51,9 @@ void RenderInteractable(Thing *thing)
 {
     Interactable *interactable = (Interactable*)thing->thing;
     Color spriteColor = WHITE;
-    Color hoverColor = {0, 255, 0, 120};
+    Color hoverColor = GREEN;
     if (interactable->hover)
     {
-        // DrawRectangle(thing->position.x, thing->position.y, (float)interactable->sprite.width, (float)interactable->sprite.height, GREEN);
         spriteColor = hoverColor;
     } else { spriteColor = WHITE; }
     DrawTexture(interactable->sprite, thing->position.x, thing->position.y, spriteColor);

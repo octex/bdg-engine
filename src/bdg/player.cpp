@@ -60,9 +60,6 @@ void UpdatePlayer(Thing *thing)
     ray = Vector2Add(ray, { thing->position.x + ((float)player->sprite.width / 2),
                         thing->position.y + ((float)player->sprite.height / 2)});
     player->rayPoint = ray;
-
-    // mousePosition.x -= thing->position.x;
-    // mousePosition.y -= thing->position.y;
     player->rotation = atan2(mousePosition.x, mousePosition.y) * -RAD2DEG;
 
     MovePlayer(thing, player, mousePosition);
@@ -84,8 +81,10 @@ void RenderPlayer(Thing *thing)
     Vector2 origin = {(float)player->sprite.width / 2, (float)player->sprite.height / 2 };
 
     DrawTexturePro(player->sprite, source, dest, origin, player->rotation, WHITE);
-    DrawLineV({dest.x, dest.y},
-                player->rayPoint, RED);
+    if (DEVELOPER_MODE)
+        // Dibujo el raycast
+        DrawLineV({dest.x, dest.y},
+                    player->rayPoint, RED);
 }
 
 void UnloadPlayer(Thing *thing)
