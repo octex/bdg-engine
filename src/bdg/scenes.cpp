@@ -209,7 +209,7 @@ Scene* LoadScene(std::string filename)
         ThingType thingType = (ThingType)thing["thing_type"];
         sol::table thingAttrs = thing["attributes"];
         Thing *newThing = CreateThing(thingPosition, thingType, thing["has_physical_body"]);
-        for (int i = 1; i <= (int)thing["attributes_len"]; i++)
+        for (int i = 1; i <= thingAttrs.size(); i++)
         {
             sol::table attr = thingAttrs[i];
             if ((std::string)attr["datatype"] == "i")
