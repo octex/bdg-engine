@@ -35,7 +35,7 @@ void UpdateThing(Thing *thing)
             UpdateStaticObj(thing);
             break;
         case INTERACTABLE:
-            InitInteractable(thing);
+            UpdateInteractable(thing);
             break;
         default:
             break;
@@ -56,7 +56,7 @@ void RenderThing(Thing *thing)
             RenderTileMap(thing);
             break;
         case INTERACTABLE:
-            InitInteractable(thing);
+            RenderInteractable(thing);
             break;
         default:
             break;
@@ -80,7 +80,7 @@ void UnloadThing(Thing *thing)
             UnloadTileSet(thing);
             break;
         case INTERACTABLE:
-            InitInteractable(thing);
+            UnloadInteractable(thing);
             break;
         default:
             break;

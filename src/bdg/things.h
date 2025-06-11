@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include "sol/sol.hpp"
 #include "raylib.h"
 #include "assets.h"
 
@@ -134,6 +135,8 @@ typedef enum PlayerState {
 typedef struct Player {
     ThingAnimator *animator;
     Texture2D sprite;
+    Vector2 rayPoint;
+    Thing *interactable;
     float rotation, movementSpeed;
 } Player;
 
@@ -163,14 +166,14 @@ void UnloadStaticObj(Thing *thing);
 typedef struct Interactable
 {
     Texture2D sprite;
-    std::string scriptSequence;
+    bool hover;
 } Interactable;
 
 void InitInteractable(Thing *thing);
 void UpdateInteractable(Thing *thing);
 void RenderInteractable(Thing *thing);
 void UnloadInteractable(Thing *thing);
-void Interact(Interactable *interactable);
+void Interact(Thing *thing);
 
 //  ---------------------------------
 //  TileSet definition

@@ -15,6 +15,14 @@ void MovePlayer(Thing *thing, Player *player, Vector2 mousePosition)
     thing->physicalBody->velocity = newVelocity;
 }
 
+void CheckForInteraction(Thing *thing, Player *player)
+{
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && player->interactable != NULL)
+    {
+        Interact(player->interactable);
+    }
+}
+
 void CameraFollow(Vector2 position, Texture2D sprite)
 {
     appCamera.target = Vector2{ position.x + sprite.width / 2, position.y + sprite.height / 2 };
@@ -26,6 +34,9 @@ void InitPlayer(Thing *thing)
     Player *player = (Player*)thing->thing;
     InitAnimator(player->animator);
     player->sprite = LoadTexture(assets[thing->strAttrs[ATTR_SPRITE]]);
+    player->rayPoint = Vector2Zero();
+    player->interactable = NULL;
+    gamePlayer = thing;
 
     thing->position.x = (thing->position.x - player->sprite.width) / 2;
     thing->position.y = (thing->position.y - player->sprite.height) / 2;
@@ -42,11 +53,20 @@ void UpdatePlayer(Thing *thing)
     Vector2 mousePosition = GetMousePosition();
     mousePosition = GetScreenToWorld2D(mousePosition, appCamera);
     mousePosition = Vector2Subtract(mousePosition, thing->position);
+
+    Vector2 ray = mousePosition;
+    ray = Vector2Normalize(ray);
+    ray = Vector2Scale(ray, 100);
+    ray = Vector2Add(ray, { thing->position.x + ((float)player->sprite.width / 2),
+                        thing->position.y + ((float)player->sprite.height / 2)});
+    player->rayPoint = ray;
+
     // mousePosition.x -= thing->position.x;
     // mousePosition.y -= thing->position.y;
     player->rotation = atan2(mousePosition.x, mousePosition.y) * -RAD2DEG;
 
     MovePlayer(thing, player, mousePosition);
+    CheckForInteraction(thing, player);
     CameraFollow(thing->position, player->sprite);
 }
 
@@ -64,14 +84,8 @@ void RenderPlayer(Thing *thing)
     Vector2 origin = {(float)player->sprite.width / 2, (float)player->sprite.height / 2 };
 
     DrawTexturePro(player->sprite, source, dest, origin, player->rotation, WHITE);
-
-    Vector2 ray = GetScreenToWorld2D(GetMousePosition(), appCamera);
-    ray = Vector2Subtract(ray, thing->position);
-    ray = Vector2Normalize(ray);
-    ray = Vector2Scale(ray, 100);
-    ray = Vector2Add(ray, {dest.x, dest.y});
     DrawLineV({dest.x, dest.y},
-                ray, RED);
+                player->rayPoint, RED);
 }
 
 void UnloadPlayer(Thing *thing)
