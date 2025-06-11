@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include "sol/sol.hpp"
 #include "raylib.h"
 #include "assets.h"
 
