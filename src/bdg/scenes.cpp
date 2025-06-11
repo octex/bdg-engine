@@ -200,10 +200,8 @@ Scene* LoadScene(std::string filename)
     sol::state lua = ReadLuaFile(filename);
 
     sol::table things = lua["things"];
-    sol::table setup = lua["setup"];
-    int amountOfThings = (int)setup["things_len"];
 
-    for (int i = 1; i <= amountOfThings; i++)
+    for (int i = 1; i <= things.size(); i++)
     {
         sol::table thing = things[i];
 
