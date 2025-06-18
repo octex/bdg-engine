@@ -212,18 +212,7 @@ Scene* LoadScene(std::string filename)
         for (int i = 1; i <= thingAttrs.size(); i++)
         {
             sol::table attr = thingAttrs[i];
-            if ((std::string)attr["datatype"] == "i")
-            {
-                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (int)attr["value"]);
-            }
-            else if ((std::string)attr["datatype"] == "f")
-            {
-                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (float)attr["value"]);
-            }
-            else if ((std::string)attr["datatype"] == "s")
-            {
-                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (std::string)attr["value"]);
-            }
+            newThing->attrs[static_cast<std::string>(attr["attr"])] = (std::string)attr["value"];
         }
         AddThing(newScene, newThing);
     }

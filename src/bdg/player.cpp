@@ -33,7 +33,7 @@ void InitPlayer(Thing *thing)
     thing->thing = MemAlloc(sizeof(Player));
     Player *player = (Player*)thing->thing;
     InitAnimator(player->animator);
-    player->sprite = LoadTexture(assets[thing->strAttrs[ATTR_SPRITE]]);
+    player->sprite = LoadTexture(assets[GetThingAttr(thing, ATTR_SPRITE)]);
     player->rayPoint = Vector2Zero();
     player->interactable = NULL;
     gamePlayer = thing;
@@ -44,7 +44,7 @@ void InitPlayer(Thing *thing)
     thing->physicalBody->isStatic = false;
     thing->physicalBody->isTrigger = false;
     thing->physicalBody->collider = {thing->position.x, thing->position.y, (float)player->sprite.width, (float)player->sprite.height};
-    player->movementSpeed = thing->floatAttrs[ATTR_PHYSICS_VELOCITY];
+    player->movementSpeed = GetThingAttrCasted<float>(thing, ATTR_PHYSICS_VELOCITY);
 }
 
 void UpdatePlayer(Thing *thing)
