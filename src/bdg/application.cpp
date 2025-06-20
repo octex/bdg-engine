@@ -12,6 +12,7 @@ void InitApplication()
     LoadSettings();
     int screenWidth = settings.screenWidth;
     int screenHeight = settings.screenHeight;
+    SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(screenWidth, screenHeight, APPLICATION_NAME);
     SetTargetFPS(TARGET_FPS);
     if (settings.fullscreen)
@@ -54,6 +55,7 @@ void CloseApplication()
     // Application closing routine
     UnloadScene(currentScene);
     MemFree(currentScene);
+    UnloadAssetsDirs();
     CloseWindow();
 }
 

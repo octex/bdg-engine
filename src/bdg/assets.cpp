@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-std::map<int, Asset> _assets;
 std::map<std::string, const char *> assets;
 FilePathList assetsDirs;
 
@@ -26,4 +25,9 @@ void LoadAssetsDirs()
         exit(-1);
     }
     assetsDirs = LoadDirectoryFilesEx(ASSETS_DIR, NULL, true);
+}
+
+void UnloadAssetsDirs()
+{
+    UnloadDirectoryFiles(assetsDirs);
 }
