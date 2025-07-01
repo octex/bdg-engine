@@ -51,15 +51,14 @@ void UpdateInteractable(Thing *thing)
 void RenderInteractable(Thing *thing)
 {
     Interactable *interactable = (Interactable*)thing->thing;
-    Color spriteColor = WHITE;
+    Color spriteColor = interactable->hover ? GREEN : WHITE;
     Color hoverColor = GREEN;
+    DrawTexture(interactable->sprite, thing->position.x, thing->position.y, spriteColor);
     if (interactable->hover)
     {
         Player* player = (Player*)gamePlayer->thing;
         DrawText(interactable->tooltip.c_str(), player->rayPoint.x, player->rayPoint.y, 12, WHITE);
-        spriteColor = hoverColor;
-    } else { spriteColor = WHITE; }
-    DrawTexture(interactable->sprite, thing->position.x, thing->position.y, spriteColor);
+    }
 }
 
 void UnloadInteractable(Thing *thing)
