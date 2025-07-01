@@ -8,7 +8,7 @@ void InitInteractable(Thing *thing)
 {
     thing->thing = MemAlloc(sizeof(Interactable));
     Interactable *interactable = (Interactable*)thing->thing;
-    interactable->sprite = LoadTexture(assets[thing->strAttrs[ATTR_SPRITE]]);
+    interactable->sprite = LoadTexture(assets[GetThingAttr(thing, ATTR_SPRITE)]);
     interactable->hover = false;
 
     // Pivot is centered
@@ -25,7 +25,7 @@ void InitInteractable(Thing *thing)
 
 void Interact(Thing *thing)
 {
-    sol::state state = ReadLuaFile(assets[thing->strAttrs[ATTR_SCRIPT]]);
+    sol::state state = ReadLuaFile(assets[GetThingAttr(thing, ATTR_SCRIPT)]);
     state.script("interact()");
 }
 

@@ -69,6 +69,12 @@ void UnloadScene(Scene *scene)
     {
         UnloadThing(thing);
     }
+    scene->things.clear();
+    scene->physicalThings.clear();
+    scene->staticThings.clear();
+    scene->dynamicThings.clear();
+    scene->collisionsToHandleX.clear();
+    scene->collisionsToHandleY.clear();
 }
 
 void UpdateXAxis(Scene *scene)
@@ -193,17 +199,14 @@ Thing* FindThing(Scene *scene, int thingId)
     return scene->things[thingId];
 }
 
-
 Scene* LoadScene(std::string filename)
 {
     Scene *newScene = CreateScene();
     sol::state lua = ReadLuaFile(filename);
 
     sol::table things = lua["things"];
-    sol::table setup = lua["setup"];
-    int amountOfThings = (int)setup["things_len"];
 
-    for (int i = 1; i <= amountOfThings; i++)
+    for (int i = 1; i <= things.size(); i++)
     {
         sol::table thing = things[i];
 
@@ -211,21 +214,10 @@ Scene* LoadScene(std::string filename)
         ThingType thingType = (ThingType)thing["thing_type"];
         sol::table thingAttrs = thing["attributes"];
         Thing *newThing = CreateThing(thingPosition, thingType, thing["has_physical_body"]);
-        for (int i = 1; i <= (int)thing["attributes_len"]; i++)
+        for (int i = 1; i <= thingAttrs.size(); i++)
         {
             sol::table attr = thingAttrs[i];
-            if ((std::string)attr["datatype"] == "i")
-            {
-                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (int)attr["value"]);
-            }
-            else if ((std::string)attr["datatype"] == "f")
-            {
-                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (float)attr["value"]);
-            }
-            else if ((std::string)attr["datatype"] == "s")
-            {
-                SetThingAttr(newThing, static_cast<std::string>(attr["attr"]), (std::string)attr["value"]);
-            }
+            newThing->attrs[static_cast<std::string>(attr["attr"])] = (std::string)attr["value"];
         }
         AddThing(newScene, newThing);
     }

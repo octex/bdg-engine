@@ -8,16 +8,18 @@
 
 #define ASSETS_DIR "resources/"
 
-typedef struct Asset
-{
-    int id;
-    const char *dir;
-} Asset;
-
 extern std::map<std::string, const char *> assets;
 extern FilePathList assetsDirs;
 
+typedef enum AssetType
+{
+    ASSET_TEXTURE,
+    ASSET_SCENE,
+    ASSET_SCRIPT
+} AssetType;
+
 void LoadAssetsDirs();
 void LoadAssets();
+void UnloadAssetsDirs();
 
 #endif

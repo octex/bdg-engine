@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <type_traits>
 #include "raylib.h"
 #include "assets.h"
 
@@ -39,9 +40,7 @@ typedef struct Thing
     void *thing;
     struct PhysicThing *physicalBody;
     Thing *parent;                              // TODO: Implementar logica de nodo padre para las posiciones.
-    std::map<std::string, int> intAttrs;
-    std::map<std::string, float> floatAttrs;
-    std::map<std::string, std::string> strAttrs;
+    std::map<std::string, std::string> attrs;
 } Thing;
 
 void InitThing(Thing *thing);
@@ -54,6 +53,24 @@ Thing* CreateThing(Vector2 position, ThingType thingType, bool hasPhysicalBody);
 void SetThingAttr(Thing* thing, std::string key, int value);
 void SetThingAttr(Thing* thing, std::string key, float value);
 void SetThingAttr(Thing* thing, std::string key, std::string value);
+
+std::string GetThingAttr(Thing *thing, std::string key);
+
+template <typename T>
+T GetThingAttrCasted(Thing *thing, std::string key)
+{
+    std::string val = thing->attrs[key];
+    T valCasted;
+    if (std::is_same<T, float>::value)
+    {
+        valCasted = std::atof(val.c_str());
+    }
+    else if (std::is_same<T, int>::value)
+    {
+        valCasted = std::atoi(val.c_str());
+    }
+    return valCasted;
+};
 
 
 // -----------------------------------------
