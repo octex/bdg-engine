@@ -69,6 +69,12 @@ void UnloadScene(Scene *scene)
     {
         UnloadThing(thing);
     }
+    scene->things.clear();
+    scene->physicalThings.clear();
+    scene->staticThings.clear();
+    scene->dynamicThings.clear();
+    scene->collisionsToHandleX.clear();
+    scene->collisionsToHandleY.clear();
 }
 
 void UpdateXAxis(Scene *scene)
@@ -192,7 +198,6 @@ Thing* FindThing(Scene *scene, int thingId)
 {
     return scene->things[thingId];
 }
-
 
 Scene* LoadScene(std::string filename)
 {

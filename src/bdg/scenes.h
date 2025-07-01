@@ -24,7 +24,6 @@ typedef struct Scene
     std::vector<PhysicThing*> dynamicThings;
     std::vector<CollisionPair> collisionsToHandleX;
     std::vector<CollisionPair> collisionsToHandleY;
-    std::map<std::string, void*> sceneAssets;
 } Scene;
 
 void InitScene(Scene *scene);
