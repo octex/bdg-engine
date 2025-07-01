@@ -14,6 +14,7 @@
 #define ATTR_TILE_CELL_X        "tile_x"
 #define ATTR_TILE_CELL_Y        "tile_y"
 #define ATTR_SCRIPT             "attr_script"
+#define ATTR_TOOLTIP             "attr_tooltip"
 
 //  ---------------------------------
 //  General definitions for Thing
@@ -182,6 +183,7 @@ void UnloadStaticObj(Thing *thing);
 typedef struct Interactable
 {
     Texture2D sprite;
+    std::string tooltip;
     bool hover;
 } Interactable;
 
