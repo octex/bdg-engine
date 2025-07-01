@@ -10,6 +10,7 @@ void InitInteractable(Thing *thing)
     Interactable *interactable = (Interactable*)thing->thing;
     interactable->sprite = LoadTexture(assets[GetThingAttr(thing, ATTR_SPRITE)]);
     interactable->hover = false;
+    interactable->tooltip = GetThingAttr(thing, ATTR_TOOLTIP);
 
     // Pivot is centered
     thing->position.x = (thing->position.x - interactable->sprite.width) / 2;
@@ -54,6 +55,8 @@ void RenderInteractable(Thing *thing)
     Color hoverColor = GREEN;
     if (interactable->hover)
     {
+        Player* player = (Player*)gamePlayer->thing;
+        DrawText(interactable->tooltip.c_str(), player->rayPoint.x, player->rayPoint.y, 12, WHITE);
         spriteColor = hoverColor;
     } else { spriteColor = WHITE; }
     DrawTexture(interactable->sprite, thing->position.x, thing->position.y, spriteColor);
