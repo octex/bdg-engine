@@ -1,11 +1,16 @@
 #include "things.h"
 
-void InitAnimator(ThingAnimator* animator)
+void InitAnimator(Thing* thing, ThingAnimator* animator)
 {
     animator = (ThingAnimator*)MemAlloc(sizeof(ThingAnimator));
+    animator->animations = {};
+    animator->currentAnimation = {};
+    animator->stateMachine = {};
+    char* animatorFileContent = LoadFileText(assets[GetThingAttr(thing, ATTR_ANIMATOR)]);
+    UnloadFileText(animatorFileContent);
 }
 
-void SetAndPlayAnimation(ThingAnimator* animator, int animationId)
+void SetAndPlayAnimation(ThingAnimator* animator, std::string animationId)
 {
     ThingAnimation *animToPlay = animator->animations[animationId];
     if (!animToPlay)

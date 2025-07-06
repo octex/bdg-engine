@@ -14,7 +14,8 @@
 #define ATTR_TILE_CELL_X        "tile_x"
 #define ATTR_TILE_CELL_Y        "tile_y"
 #define ATTR_SCRIPT             "attr_script"
-#define ATTR_TOOLTIP             "attr_tooltip"
+#define ATTR_TOOLTIP            "attr_tooltip"
+#define ATTR_ANIMATOR           "attr_animator"
 
 //  ---------------------------------
 //  General definitions for Thing
@@ -34,6 +35,7 @@ typedef enum ThingType {
 
 typedef struct Thing
 {
+    std::string thingStatus;
     unsigned int thingId;
     Vector2 position;
     ThingType thingType;
@@ -87,20 +89,22 @@ typedef enum ThingAnimationState
 
 typedef struct ThingAnimation
 {
-    ThingAnimationState state;
-    int frameRate, frames, frames_per_y_axis;
-    int frame = 0;
     Texture2D sprites;
+    int frameRate, frames, frameWidth, frameHeight, yIndex;
+    int frame = 0;
+    ThingAnimationState state;
+    bool loop;
 } ThingAnimation;
 
 typedef struct ThingAnimator
 {
     ThingAnimation *currentAnimation;
-    std::map <int, ThingAnimation*> animations;
+    std::map <std::string, ThingAnimation*> animations;
+    std::map <std::string, std::string> stateMachine;
 } ThingAnimator;
 
-void InitAnimator(ThingAnimator*);
-void SetAndPlayAnimation(ThingAnimator*, int);
+void InitAnimator(Thing*, ThingAnimator*);
+void SetAndPlayAnimation(ThingAnimator*, std::string);
 
 void UpdateStatus(ThingAnimation*, ThingAnimationState);
 void PlayAnimation(ThingAnimation*);
