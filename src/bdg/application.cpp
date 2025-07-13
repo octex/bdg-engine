@@ -26,7 +26,10 @@ void InitApplication()
     appCamera.rotation = 0;
     if (!currentScene)
     {
-        currentScene = LoadScene(assets[START_SCENE]);
+        // currentScene = LoadScene(assets[START_SCENE]);
+        std::string scenePath;
+        GetAsset(START_SCENE, ASSET_SCENE, &scenePath);
+        currentScene = LoadScene(scenePath);
     }
     InitScene(currentScene);
 }

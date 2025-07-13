@@ -205,6 +205,14 @@ Scene* LoadScene(std::string filename)
     sol::state lua = ReadLuaFile(filename);
 
     sol::table things = lua["things"];
+    sol::table assets = lua["assets"];
+
+    for (int i = 1; i <= assets.size(); i++)
+    {
+        std::string alias = assets[i]["asset_id"];
+        AssetType assetType = assets[i]["asset_type"];
+        LoadAsset(alias, assetType);
+    }
 
     for (int i = 1; i <= things.size(); i++)
     {

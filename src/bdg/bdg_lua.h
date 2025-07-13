@@ -10,5 +10,6 @@
 #include "sol/sol.hpp"
 
 sol::state ReadLuaFile(std::string filename);
+sol::state ReadLuaScript(std::string filename);
 
 #endif

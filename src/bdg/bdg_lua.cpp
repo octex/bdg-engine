@@ -25,6 +25,11 @@ sol::state ReadLuaFile(std::string filename)
     luaState.set("ATTR_SCRIPT", ATTR_SCRIPT);
     luaState.set("ATTR_TOOLTIP", ATTR_TOOLTIP);
 
+    // Set AssetTypes
+    luaState.set("ASSET_TEXTURE", ASSET_TEXTURE);
+    luaState.set("ASSET_SCENE", ASSET_SCENE);
+    luaState.set("ASSET_SCRIPT", ASSET_SCRIPT);
+
     luaState.script_file(filename);
     return luaState;
 }
