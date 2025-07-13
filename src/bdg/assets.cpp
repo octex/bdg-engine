@@ -59,3 +59,24 @@ void GetAsset(std::string alias, AssetType assetType, void* asset)
             break;
     }
 }
+
+void LoadAsset(std::string alias, AssetType assetType)
+{
+    switch (assetType)
+    {
+        case ASSET_TEXTURE:
+        {
+            if (textureMap.count(alias) == 0)
+            {
+                textureMap[alias] = LoadTexture(assetsIndex[alias].c_str());
+            }
+        }
+            break;
+        case ASSET_SCENE:
+            break;
+        case ASSET_SCRIPT:
+            break;
+        default:
+            break;
+    }
+}

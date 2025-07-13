@@ -34,5 +34,6 @@ void UnloadAssetsDirs();
 
 // template <typename T>
 void GetAsset(std::string alias, AssetType assetType, void* asset);
+void LoadAsset(std::string alias, AssetType assetType);
 
 #endif
