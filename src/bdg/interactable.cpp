@@ -29,7 +29,7 @@ void Interact(Thing *thing)
 {
     std::string filePath;
     GetAsset(GetThingAttr(thing, ATTR_SCRIPT), ASSET_SCRIPT, &filePath);
-    sol::state state = ReadLuaFile(filePath);
+    sol::state state = ReadLuaScript(filePath);
     state.script("interact()");
 }
 
