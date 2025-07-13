@@ -33,7 +33,8 @@ void InitPlayer(Thing *thing)
     thing->thing = MemAlloc(sizeof(Player));
     Player *player = (Player*)thing->thing;
     InitAnimator(player->animator);
-    player->sprite = LoadTexture(assets[GetThingAttr(thing, ATTR_SPRITE)]);
+    // player->sprite = LoadTexture(assets[GetThingAttr(thing, ATTR_SPRITE)]);
+    GetAsset(GetThingAttr(thing, ATTR_SPRITE), ASSET_TEXTURE, &player->sprite);
     player->rayPoint = Vector2Zero();
     player->interactable = NULL;
     gamePlayer = thing;
